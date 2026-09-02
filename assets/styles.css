@@ -992,6 +992,16 @@ h3 {
     box-shadow: 0 14px 36px rgba(16, 42, 67, 0.06);
 }
 
+.form-honeypot {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+}
+
 .signup-summary {
     position: sticky;
     inset-block-start: 104px;
@@ -1160,8 +1170,32 @@ h3 {
     margin-block-start: 4px;
 }
 
+.captcha-block {
+    display: grid;
+    justify-items: start;
+    gap: 6px;
+    margin-block: 0 24px;
+}
+
+.captcha-block small {
+    color: var(--muted);
+    font-size: 0.78rem;
+}
+
+.cf-turnstile {
+    width: min(100%, 420px);
+    min-height: 65px;
+    max-width: 100%;
+}
+
 .form-submit {
     border: 0;
+}
+
+.form-submit:disabled {
+    cursor: wait;
+    filter: saturate(0.55);
+    opacity: 0.72;
 }
 
 .field-error,

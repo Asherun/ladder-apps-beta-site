@@ -6,20 +6,29 @@
 
 ```bash
 LADDER_SUPPORT_EMAIL="approved-public-address@example.com" \
-python3 AppSupportSite/build_site.py --output /tmp/LadderSupportSite
+LADDER_WAITLIST_API_URL="https://<worker-host>/v1/beta-signups" \
+LADDER_TURNSTILE_SITE_KEY="<production-site-key>" \
+python3 build_site.py --output /tmp/LadderSupportSite
 ```
 
-יש לפרסם רק את תיקיית הפלט. כתובת התמיכה מוזרקת בזמן הבנייה ואינה נשמרת בקוד המקור. הבנייה חוסמת קובצי מקור של אפליקציות, פרויקטי Xcode, תיקיות Git, מפתחות, כתובות מקומיות וקישורי TestFlight ציבוריים.
+יש לפרסם רק את תיקיית הפלט. כתובת התמיכה, כתובת ה־Worker ומפתח האתר הציבורי של Turnstile מוזרקים בזמן הבנייה. הבנייה חוסמת קובצי מקור של אפליקציות, פרויקטי Xcode, תיקיות Git, מפתחות סודיים, כתובות מקומיות, קישורי TestFlight ציבוריים ומפתחות Turnstile המיועדים לבדיקות.
+
+## שירות הרשמה מאובטח ו-CAPTCHA
+
+האתר הסטטי שולח את הטופס ל־Cloudflare Worker ייעודי. ה־Worker מאמת Turnstile בצד השרת, בודק Origin וסכמת נתונים, מפעיל rate limit, משתמש בשדה honeypot, מגבב את כתובת הדוא״ל לצורך מניעת כפילויות ומצפין את השדות המזהים לפני D1. n8n אינו נחשף לאינטרנט.
+
+הקמת ה־Worker, D1 והסודות מתועדת ב־`edge/README.md`. אין להשתמש במפתחות הבדיקה של Turnstile בפריסה אמיתית.
 
 ## GitHub Pages - מסלול מומלץ
 
 1. יוצרים repository ייעודי ומעלים אליו את תוכן `AppSupportSite`, ללא נתוני בודקים.
-2. ב-`Settings > Secrets and variables > Actions` מוסיפים secret בשם `LADDER_SUPPORT_EMAIL` ובו כתובת התמיכה הציבורית המאושרת.
-3. ב-`Settings > Pages > Build and deployment` בוחרים `GitHub Actions`.
-4. דוחפים ל-`main` או מריצים ידנית את `Deploy Ladder beta site`.
-5. מאמתים שהנתיב `/beta/` זמין ושאין קישורי TestFlight ציבוריים.
-6. מאמתים שהנתיבים `/privacy/` ו-`/terms/` זמינים ללא התחברות.
-7. מאמתים שמעבר השפה שומר על הדף המקביל ושכל נתיבי `/en/` זמינים ללא התחברות.
+2. ב־`Settings > Secrets and variables > Actions` מוסיפים secret בשם `LADDER_SUPPORT_EMAIL` ובו כתובת התמיכה הציבורית המאושרת.
+3. באותו מסך, תחת Variables, מוסיפים `LADDER_WAITLIST_API_URL` ו־`LADDER_TURNSTILE_SITE_KEY`.
+4. ב־`Settings > Pages > Build and deployment` בוחרים `GitHub Actions`.
+5. דוחפים ל־`main` או מריצים ידנית את `Deploy Ladder beta site`.
+6. מאמתים שהנתיב `/beta/` שולח טופס בהצלחה ושאין קישורי TestFlight ציבוריים.
+7. מאמתים שהנתיבים `/privacy/` ו־`/terms/` זמינים ללא התחברות.
+8. מאמתים שמעבר השפה שומר על הדף המקביל ושכל נתיבי `/en/` זמינים ללא התחברות.
 
 ה-workflow ב-`.github/workflows/pages.yml` בונה את האתר לתיקייה זמנית, מעלה רק את הפלט הציבורי ומפרסם אותו ל-GitHub Pages.
 
@@ -29,8 +38,9 @@ python3 AppSupportSite/build_site.py --output /tmp/LadderSupportSite
 
 ## גבול פרטיות
 
-- טופס ההרשמה מכין הודעת דוא״ל מקומית ואינו שולח מידע לשרת האתר.
-- רשימות CSV נשמרות מחוץ ל-repository ומועלות ידנית ל-App Store Connect.
+- טופס ההרשמה שולח מידע רק ל־Worker הייעודי דרך HTTPS ולא ישירות ל־n8n.
+- פרטים מזהים מוצפנים גם ב־D1 וגם במסד המקומי. ה־dashboard מציג ספירות בלבד.
+- רשימות CSV מפוענחות רק לפי דרישה, נשמרות מחוץ ל־repository בהרשאות `600` ומועלות ידנית ל־App Store Connect.
 - אין לפרסם את n8n, מפתחות API, כתובות Apple ID או פרטי בודקים.
 
 ## קישורים ל-App Store Connect ולאפליקציות
@@ -51,4 +61,4 @@ python3 AppSupportSite/build_site.py --output /tmp/LadderSupportSite
 - בדף אנגלי יש לוודא `dir="ltr"`, יישור טקסט לשמאל וסדר רכיבים מקביל.
 - טאבי הניווט צריכים להישאר ממורכזים, והלוגו ומחליף השפה צריכים להחליף צדדים בין השפות.
 - יש לבדוק לפחות רוחב מובייל של 390 פיקסלים ורוחב דסקטופ של 1280 פיקסלים, ללא גלילה אופקית או טקסט חתוך.
-- יש לבדוק שטופס הבטא מגיע ל-100% בשתי השפות ושהוא מכין הודעת דוא״ל בשפת הדף.
+- יש לבדוק שטופס הבטא מגיע ל־100% בשתי השפות, ש־Turnstile מוצג ושהודעת הצלחה מתקבלת ללא פתיחת אפליקציית דוא״ל.

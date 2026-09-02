@@ -29,15 +29,27 @@ jobs:
       - name: Verify support address
         env:
           LADDER_SUPPORT_EMAIL: ${{ secrets.LADDER_SUPPORT_EMAIL }}
+          LADDER_WAITLIST_API_URL: ${{ vars.LADDER_WAITLIST_API_URL }}
+          LADDER_TURNSTILE_SITE_KEY: ${{ vars.LADDER_TURNSTILE_SITE_KEY }}
         run: |
           test -n "$LADDER_SUPPORT_EMAIL" || {
             echo "Repository secret LADDER_SUPPORT_EMAIL is required."
+            exit 1
+          }
+          test -n "$LADDER_WAITLIST_API_URL" || {
+            echo "Repository variable LADDER_WAITLIST_API_URL is required."
+            exit 1
+          }
+          test -n "$LADDER_TURNSTILE_SITE_KEY" || {
+            echo "Repository variable LADDER_TURNSTILE_SITE_KEY is required."
             exit 1
           }
 
       - name: Build public site
         env:
           LADDER_SUPPORT_EMAIL: ${{ secrets.LADDER_SUPPORT_EMAIL }}
+          LADDER_WAITLIST_API_URL: ${{ vars.LADDER_WAITLIST_API_URL }}
+          LADDER_TURNSTILE_SITE_KEY: ${{ vars.LADDER_TURNSTILE_SITE_KEY }}
         run: python3 build_site.py --output /tmp/ladder-support-site
 
       - name: Configure Pages

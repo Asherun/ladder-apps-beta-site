@@ -27,6 +27,7 @@
     <link rel="icon" href="../assets/ladder-learning-logo.png">
     <link rel="stylesheet" href="../assets/styles.css">
     <script src="../assets/site.js" defer></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <script src="../assets/beta.js" defer></script>
 </head>
 <body class="beta-page">
@@ -48,7 +49,7 @@
                 <p class="eyebrow">הצטרפות מוקדמת לפני ההשקה</p>
                 <h1 id="beta-title">עוזרים למשחקים לטפס שלב</h1>
                 <p>בוחרים משחק ומכשיר, מקבלים הזמנה אישית ומשפיעים על הגרסה שתגיע למשפחות.</p>
-                <a class="primary-action" href="#signup">להכנת בקשת הצטרפות</a>
+                <a class="primary-action" href="#signup">להצטרפות לרשימת ההמתנה</a>
             </div>
         </section>
 
@@ -76,18 +77,19 @@
 
             <section id="signup" class="signup-section" aria-labelledby="signup-title">
                 <div class="signup-heading">
-                    <div><p class="section-kicker">רשימת המתנה מבוקרת</p><h2 id="signup-title">הכנת בקשת הצטרפות</h2><p>הפרטים נפתחים באפליקציית הדואר שלכם ואינם נשמרים באתר.</p></div>
+                    <div><p class="section-kicker">רשימת המתנה מבוקרת</p><h2 id="signup-title">הצטרפות לבדיקות הבטא</h2><p>הפרטים נשלחים בצורה מאובטחת, נבדקים ידנית ומשמשים רק לניהול הבטא.</p></div>
                     <div class="signup-progress" aria-live="polite"><span id="progressLabel">0% הושלם</span><progress id="signupProgress" max="100" value="0">0%</progress></div>
                 </div>
 
                 <div class="signup-layout">
-                    <form id="betaSignupForm" class="signup-form" data-recipient="{{SUPPORT_EMAIL}}" novalidate>
+                    <form id="betaSignupForm" class="signup-form" data-endpoint="{{WAITLIST_API_URL}}" data-locale="he" novalidate>
+                        <div class="form-honeypot" aria-hidden="true"><input type="text" name="website" autocomplete="off" tabindex="-1" aria-label=""></div>
                         <fieldset>
                             <legend>אילו משחקים תרצו לבדוק?</legend>
                             <div class="game-choice-grid">
-                                <label class="game-choice"><input type="checkbox" name="apps" value="סולם הדגלים"><img src="../assets/flag-ladder.png" alt=""><span><strong>סולם הדגלים</strong><small>194 דגלים ב־20 מסעות</small></span></label>
-                                <label class="game-choice"><input type="checkbox" name="apps" value="סולם החשבון"><img src="../assets/math-ladder.png" alt=""><span><strong>סולם החשבון</strong><small>500 תרגילים ב־50 שלבים</small></span></label>
-                                <label class="game-choice"><input type="checkbox" name="apps" value="סולם האנגלית"><img src="../assets/english-ladder.png" alt=""><span><strong>סולם האנגלית</strong><small>500 מילים ב־50 נושאים</small></span></label>
+                                <label class="game-choice"><input type="checkbox" name="apps" value="flag-ladder"><img src="../assets/flag-ladder.png" alt=""><span><strong>סולם הדגלים</strong><small>194 דגלים ב־20 מסעות</small></span></label>
+                                <label class="game-choice"><input type="checkbox" name="apps" value="math-ladder"><img src="../assets/math-ladder.png" alt=""><span><strong>סולם החשבון</strong><small>500 תרגילים ב־50 שלבים</small></span></label>
+                                <label class="game-choice"><input type="checkbox" name="apps" value="english-ladder"><img src="../assets/english-ladder.png" alt=""><span><strong>סולם האנגלית</strong><small>500 מילים ב־50 נושאים</small></span></label>
                             </div>
                             <p class="field-error" id="appsError"></p>
                         </fieldset>
@@ -95,8 +97,8 @@
                         <fieldset>
                             <legend>באילו מכשירים תוכלו לבדוק?</legend>
                             <div class="platform-options">
-                                <label><input type="checkbox" name="platforms" value="iPhone / iPad"> iPhone או iPad</label>
-                                <label><input type="checkbox" name="platforms" value="Apple TV"> Apple TV</label>
+                                <label><input type="checkbox" name="platforms" value="ios"> iPhone או iPad</label>
+                                <label><input type="checkbox" name="platforms" value="tvos"> Apple TV</label>
                             </div>
                             <p class="field-error" id="platformsError"></p>
                         </fieldset>
@@ -105,12 +107,13 @@
                             <label>שם פרטי<input type="text" name="firstName" autocomplete="given-name" maxlength="80" required></label>
                             <label>שם משפחה<input type="text" name="lastName" autocomplete="family-name" maxlength="80" required></label>
                             <label class="full-field">כתובת הדוא״ל של חשבון Apple<input type="email" name="email" autocomplete="email" inputmode="email" maxlength="160" required><small>לכתובת הזו תישלח הזמנת TestFlight לאחר אישור.</small></label>
-                            <label class="full-field">רקע בבדיקות<select name="background"><option value="לא צוין">בחירה אופציונלית</option><option value="הורה או בן משפחה">הורה או בן משפחה</option><option value="איש או אשת חינוך">איש או אשת חינוך</option><option value="בדיקות תוכנה או פיתוח">בדיקות תוכנה או פיתוח</option><option value="אחר">אחר</option></select></label>
+                            <label class="full-field">רקע בבדיקות<select name="background"><option value="unspecified">בחירה אופציונלית</option><option value="parent">הורה או בן משפחה</option><option value="educator">איש או אשת חינוך</option><option value="software">בדיקות תוכנה או פיתוח</option><option value="other">אחר</option></select></label>
                             <label class="full-field">הערה קצרה<textarea name="notes" rows="3" maxlength="500" placeholder="דגם מכשיר, גילאי היעד שמעניינים אתכם או נושא שתרצו לבדוק"></textarea><small>אין להזין שם, תמונה, הקלטה או מידע לימודי ורפואי של ילד.</small></label>
                         </div>
 
                         <label class="consent-row"><input type="checkbox" name="adultConsent" required><span>אני מבוגר/ת, קראתי את <a href="../privacy/">מדיניות הפרטיות</a> ואת <a href="../terms/">תנאי השימוש</a>, ומאשר/ת לקבל פנייה והזמנת TestFlight לצורך בדיקת הבטא.</span></label>
-                        <button class="primary-action form-submit" type="submit">הכנת בקשת הצטרפות</button>
+                        <div class="captcha-block"><div class="cf-turnstile" data-sitekey="{{TURNSTILE_SITE_KEY}}" data-action="beta_signup" data-theme="light" data-language="he" data-size="flexible"></div><p class="field-error" id="captchaError"></p><small>בדיקת האבטחה מסייעת לנו לחסום הרשמות אוטומטיות כוזבות.</small></div>
+                        <button class="primary-action form-submit" type="submit">שליחת בקשת הצטרפות</button>
                         <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
                     </form>
 

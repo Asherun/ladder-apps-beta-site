@@ -12,8 +12,21 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 
-PLACEHOLDER = "{{SUPPORT_EMAIL}}"
+SUPPORT_EMAIL_PLACEHOLDER = "{{SUPPORT_EMAIL}}"
+WAITLIST_API_PLACEHOLDER = "{{WAITLIST_API_URL}}"
+TURNSTILE_SITE_KEY_PLACEHOLDER = "{{TURNSTILE_SITE_KEY}}"
+PLACEHOLDERS = {
+    SUPPORT_EMAIL_PLACEHOLDER,
+    WAITLIST_API_PLACEHOLDER,
+    TURNSTILE_SITE_KEY_PLACEHOLDER,
+}
 EMAIL_PATTERN = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
+TURNSTILE_SITE_KEY_PATTERN = re.compile(r"^[A-Za-z0-9_-]{20,100}$")
+TURNSTILE_TEST_SITE_KEYS = {
+    "1x00000000000000000000AA",
+    "2x00000000000000000000AB",
+    "3x00000000000000000000FF",
+}
 ALLOWED_PUBLIC_SUFFIXES = {
     ".css",
     ".html",
@@ -163,8 +176,9 @@ def verify_public_artifact(output: Path) -> tuple[int, int, int]:
         if path.suffix.lower() not in {".css", ".html", ".js", ".txt", ".xml", ".webmanifest"}:
             continue
         content = path.read_text(encoding="utf-8", errors="ignore")
-        if PLACEHOLDER in content:
-            raise SystemExit(f"Unresolved contact placeholder in {relative}")
+        unresolved = sorted(placeholder for placeholder in PLACEHOLDERS if placeholder in content)
+        if unresolved:
+            raise SystemExit(f"Unresolved public placeholder in {relative}: {', '.join(unresolved)}")
         for marker, description in FORBIDDEN_PUBLIC_TEXT.items():
             if marker.lower() in content.lower():
                 raise SystemExit(f"Blocked {description} in public file: {relative}")
@@ -176,9 +190,27 @@ def main() -> int:
     source = Path(__file__).resolve().parent
     output = args.output.resolve()
     email = os.environ.get("LADDER_SUPPORT_EMAIL", "").strip()
+    waitlist_api_url = os.environ.get("LADDER_WAITLIST_API_URL", "").strip()
+    turnstile_site_key = os.environ.get("LADDER_TURNSTILE_SITE_KEY", "").strip()
+    allow_turnstile_test_key = os.environ.get("LADDER_ALLOW_TURNSTILE_TEST_KEY") == "1"
 
     if not EMAIL_PATTERN.fullmatch(email):
         raise SystemExit("Set LADDER_SUPPORT_EMAIL to the approved public support address.")
+    parsed_api_url = urlsplit(waitlist_api_url)
+    if (
+        parsed_api_url.scheme != "https"
+        or not parsed_api_url.netloc
+        or parsed_api_url.username
+        or parsed_api_url.password
+        or parsed_api_url.query
+        or parsed_api_url.fragment
+        or not parsed_api_url.path.endswith("/v1/beta-signups")
+    ):
+        raise SystemExit("Set LADDER_WAITLIST_API_URL to the HTTPS Worker /v1/beta-signups endpoint.")
+    if not TURNSTILE_SITE_KEY_PATTERN.fullmatch(turnstile_site_key):
+        raise SystemExit("Set LADDER_TURNSTILE_SITE_KEY to the public Cloudflare Turnstile site key.")
+    if turnstile_site_key in TURNSTILE_TEST_SITE_KEYS and not allow_turnstile_test_key:
+        raise SystemExit("Cloudflare Turnstile test keys are blocked from production builds.")
     if output == source or source in output.parents:
         raise SystemExit("Choose an output directory outside AppSupportSite.")
 
@@ -195,21 +227,33 @@ def main() -> int:
             ".git",
             ".github",
             ".gitignore",
+            "edge",
+            "tests",
+            "package.json",
+            "package-lock.json",
         ),
     )
 
-    replaced = 0
+    replacements = {
+        SUPPORT_EMAIL_PLACEHOLDER: email,
+        WAITLIST_API_PLACEHOLDER: waitlist_api_url,
+        TURNSTILE_SITE_KEY_PLACEHOLDER: turnstile_site_key,
+    }
+    replaced = {placeholder: 0 for placeholder in replacements}
     for page in output.rglob("*.html"):
         content = page.read_text(encoding="utf-8")
-        replaced += content.count(PLACEHOLDER)
-        page.write_text(content.replace(PLACEHOLDER, email), encoding="utf-8")
+        for placeholder, value in replacements.items():
+            replaced[placeholder] += content.count(placeholder)
+            content = content.replace(placeholder, value)
+        page.write_text(content, encoding="utf-8")
 
-    if replaced == 0:
-        raise SystemExit("Support email placeholder was not found.")
+    missing_placeholders = [placeholder for placeholder, count in replaced.items() if count == 0]
+    if missing_placeholders:
+        raise SystemExit(f"Required placeholders were not found: {', '.join(missing_placeholders)}")
     public_file_count, internal_link_count, social_page_count = verify_public_artifact(output)
     print(
         f"Support site built: {output} "
-        f"({replaced} contact placeholders resolved, {public_file_count} public web files verified, "
+        f"({sum(replaced.values())} protected placeholders resolved, {public_file_count} public web files verified, "
         f"{internal_link_count} internal links checked, {social_page_count} social previews checked)"
     )
     return 0
