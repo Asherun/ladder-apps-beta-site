@@ -6,6 +6,8 @@ Typography uses a locally hosted Hebrew and Latin subset of Rubik. The font file
 
 This repository is intentionally isolated from the native application repositories. It must contain only public website HTML, CSS, JavaScript, marketing images, and deployment files. The build fails if a non-web artifact, local URL, public TestFlight invite, private-key marker, or broken internal link reaches the publishable output.
 
+Every public page includes an absolute canonical URL plus Open Graph and Twitter Card metadata. The build also verifies that the shared preview image exists and is reachable through the public GitHub Pages path, preventing blank social previews from being deployed again.
+
 The source intentionally contains `{{SUPPORT_EMAIL}}`. Build a publishable copy only after the account owner approves the address for public display:
 
 ```bash
