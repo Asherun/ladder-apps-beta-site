@@ -2,6 +2,8 @@
 
 Static bilingual Hebrew/English showcase, beta waitlist, support, privacy, and terms pages for Flag Ladder, Math Ladder, and English Ladder. Hebrew pages use full RTL layout; their English counterparts use LTR layout with a page-level language switch.
 
+Typography uses a locally hosted Hebrew and Latin subset of Rubik. The font files and their SIL Open Font License are stored in `assets/fonts/`; the public site does not contact a font CDN at runtime.
+
 This repository is intentionally isolated from the native application repositories. It must contain only public website HTML, CSS, JavaScript, marketing images, and deployment files. The build fails if a non-web artifact, local URL, public TestFlight invite, private-key marker, or broken internal link reaches the publishable output.
 
 The source intentionally contains `{{SUPPORT_EMAIL}}`. Build a publishable copy only after the account owner approves the address for public display:

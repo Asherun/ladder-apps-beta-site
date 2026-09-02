@@ -26,6 +26,7 @@ ALLOWED_PUBLIC_SUFFIXES = {
     ".txt",
     ".webmanifest",
     ".webp",
+    ".woff2",
     ".xml",
 }
 ALLOWED_EXTENSIONLESS_FILES = {".nojekyll", "CNAME"}
