@@ -1,6 +1,6 @@
 # Ladder Apps Support Site
 
-Static Hebrew showcase, beta waitlist, support, privacy, and terms pages for Flag Ladder, Math Ladder, and English Ladder.
+Static bilingual Hebrew/English showcase, beta waitlist, support, privacy, and terms pages for Flag Ladder, Math Ladder, and English Ladder. Hebrew pages use full RTL layout; their English counterparts use LTR layout with a page-level language switch.
 
 This repository is intentionally isolated from the native application repositories. It must contain only public website HTML, CSS, JavaScript, marketing images, and deployment files. The build fails if a non-web artifact, local URL, public TestFlight invite, private-key marker, or broken internal link reaches the publishable output.
 
@@ -19,6 +19,9 @@ Do not publish the source directory while the placeholder remains. The expected 
 - `/math/` - Math Ladder support
 - `/english/` - English Ladder support
 - `/beta/` - controlled adult beta waitlist with no public TestFlight links
+- `/en/` - English showcase and support hub
+- `/en/privacy/`, `/en/terms/`, `/en/beta/` - English legal and beta pages
+- `/en/flag/`, `/en/math/`, `/en/english/` - English app support pages
 
 Deployment notes for GitHub Pages and Codex Sites are in `DEPLOYMENT_HE.md`.
 

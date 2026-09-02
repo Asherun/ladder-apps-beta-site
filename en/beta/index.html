@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Join the controlled TestFlight beta waitlist for Flag Ladder, Math Ladder, and English Ladder.">
+    <title>Beta Testing | Ladder Learning Games</title>
+    <link rel="icon" href="../../assets/ladder-learning-logo.png">
+    <link rel="stylesheet" href="../../assets/styles.css">
+    <script src="../../assets/site.js" defer></script>
+    <script src="../../assets/beta.js" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header"><div class="header-inner"><a class="brand" href="../" aria-label="Ladder Learning Games home"><img src="../../assets/ladder-learning-logo.png" alt=""><span>Ladder Learning Games</span></a><nav class="site-nav" aria-label="Primary navigation"><a href="../#games-title">Games</a><a href="./" aria-current="page">Beta</a><a href="../terms/">Terms</a><a href="../privacy/">Privacy</a></nav><div class="header-actions"><a class="language-switch" data-language-switch href="../../beta/" hreflang="he" lang="he" aria-label="מעבר לעברית">עברית</a></div></div></header>
+
+    <main id="main-content">
+        <section class="beta-hero" aria-labelledby="beta-title"><div class="beta-hero-inner"><img class="hero-logo" src="../../assets/ladder-learning-logo.png" alt="Ladder Learning Games logo"><p class="eyebrow">Early access before launch</p><h1 id="beta-title">Help the games climb one step higher</h1><p>Choose a game and device, receive a personal invitation, and help shape the version families will use.</p><a class="primary-action" href="#signup">Prepare a beta request</a></div></section>
+
+        <div class="page beta-content">
+            <section class="beta-intro" aria-labelledby="who-title" data-reveal><p class="section-kicker">A controlled testing round</p><h2 id="who-title">Looking for parents, educators, and curious testers</h2><p class="lead">Registration is for adults. You may play together with a child, but the invitation, account, and feedback remain with the adult.</p><ul class="feature-row" aria-label="Testing details"><li><strong>15 minutes</strong><span>Enough for a first session</span></li><li><strong>Free to test</strong><span>TestFlight purchases are not charged</span></li><li><strong>Personal invite</strong><span>No open public link</span></li><li><strong>iOS and tvOS</strong><span>Use the device available to you</span></li></ul></section>
+
+            <section class="journey-band" aria-labelledby="journey-title" data-reveal><h2 id="journey-title">What happens after registration</h2><ol class="journey-steps"><li><span>1</span><strong>Choose</strong><p>One or more games and a testing platform.</p></li><li><span>2</span><strong>Get invited</strong><p>An individual TestFlight invitation is sent after approval.</p></li><li><span>3</span><strong>Play and shape</strong><p>Send a short feedback report from TestFlight.</p></li></ol></section>
+
+            <section id="signup" class="signup-section" aria-labelledby="signup-title">
+                <div class="signup-heading"><div><p class="section-kicker">Controlled waitlist</p><h2 id="signup-title">Prepare your request</h2><p>Your details open in your email app and are not stored by this website.</p></div><div class="signup-progress" aria-live="polite"><span id="progressLabel">0% complete</span><progress id="signupProgress" max="100" value="0">0%</progress></div></div>
+                <div class="signup-layout">
+                    <form id="betaSignupForm" class="signup-form" data-recipient="{{SUPPORT_EMAIL}}" novalidate>
+                        <fieldset><legend>Which games would you like to test?</legend><div class="game-choice-grid"><label class="game-choice"><input type="checkbox" name="apps" value="Flag Ladder"><img src="../../assets/flag-ladder.png" alt=""><span><strong>Flag Ladder</strong><small>194 flags across 20 journeys</small></span></label><label class="game-choice"><input type="checkbox" name="apps" value="Math Ladder"><img src="../../assets/math-ladder.png" alt=""><span><strong>Math Ladder</strong><small>500 exercises across 50 stages</small></span></label><label class="game-choice"><input type="checkbox" name="apps" value="English Ladder"><img src="../../assets/english-ladder.png" alt=""><span><strong>English Ladder</strong><small>500 words across 50 topics</small></span></label></div><p class="field-error" id="appsError"></p></fieldset>
+                        <fieldset><legend>Which devices can you test on?</legend><div class="platform-options"><label><input type="checkbox" name="platforms" value="iPhone / iPad"> iPhone or iPad</label><label><input type="checkbox" name="platforms" value="Apple TV"> Apple TV</label></div><p class="field-error" id="platformsError"></p></fieldset>
+                        <div class="form-grid"><label>First name<input type="text" name="firstName" autocomplete="given-name" maxlength="80" required></label><label>Last name<input type="text" name="lastName" autocomplete="family-name" maxlength="80" required></label><label class="full-field">Apple Account email<input type="email" name="email" autocomplete="email" inputmode="email" maxlength="160" required><small>Your TestFlight invitation will be sent to this address after approval.</small></label><label class="full-field">Testing background<select name="background"><option value="Not specified">Optional selection</option><option value="Parent or family member">Parent or family member</option><option value="Educator">Educator</option><option value="Software testing or development">Software testing or development</option><option value="Other">Other</option></select></label><label class="full-field">Short note<textarea name="notes" rows="3" maxlength="500" placeholder="Device model, age range of interest, or something you would like to test"></textarea><small>Do not enter a child's name, image, recording, educational record, or health information.</small></label></div>
+                        <label class="consent-row"><input type="checkbox" name="adultConsent" required><span>I am an adult, have read the <a href="../privacy/">Privacy Policy</a> and <a href="../terms/">Terms of Use</a>, and agree to receive beta-related contact and a TestFlight invitation.</span></label>
+                        <button class="primary-action form-submit" type="submit">Prepare beta request</button><p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
+                    </form>
+                    <aside class="signup-summary" aria-labelledby="summary-title"><p class="section-kicker">Your request</p><h3 id="summary-title">Selection summary</h3><dl><div><dt>Games</dt><dd id="selectedApps">Not selected</dd></div><div><dt>Devices</dt><dd id="selectedPlatforms">Not selected</dd></div><div><dt>Next step</dt><dd>Manual review and a personal invitation</dd></div></dl><p>Places in each round are limited so we can read every report and follow up when needed.</p></aside>
+                </div>
+            </section>
+
+            <aside class="beta-note" aria-label="Information about beta purchases"><h2>Beta purchases are not charged</h2><p>TestFlight may display a local price to test the purchase flow. Apple marks the transaction as a test and does not create a real charge.</p></aside>
+            <section class="privacy-reminder" aria-labelledby="privacy-title"><h2 id="privacy-title">Feedback that protects privacy</h2><p>The game, platform, device model, system version, and what happened on screen are enough. No child details are needed. Read more in the <a href="../privacy/">Privacy Policy</a>.</p></section>
+        </div>
+    </main>
+
+    <footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><img src="../../assets/ladder-learning-logo.png" alt=""><div><strong>Ladder Learning Games</strong><p>Learning that feels like progress.</p></div></div><nav class="footer-links" aria-label="Footer navigation"><a href="../">Games</a><a href="mailto:{{SUPPORT_EMAIL}}">Contact</a><a href="../terms/">Terms of Use</a><a href="../privacy/">Privacy Policy</a><a data-language-switch href="../../beta/" hreflang="he" lang="he">עברית</a></nav><p class="footer-legal">© 2026 Asher Baranes. All rights reserved.</p></div></footer>
+</body>
+</html>
