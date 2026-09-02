@@ -7,6 +7,7 @@ import argparse
 import os
 import re
 import shutil
+from html import escape
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -37,6 +38,27 @@ FORBIDDEN_PUBLIC_TEXT = {
     "-----BEGIN PRIVATE KEY-----": "private key",
     "-----BEGIN EC PRIVATE KEY-----": "private key",
 }
+PUBLIC_BASE_URL = "https://asherun.github.io/ladder-apps-beta-site/"
+SOCIAL_IMAGE_URL = f"{PUBLIC_BASE_URL}assets/beta-family-hero.jpg"
+REQUIRED_SOCIAL_META = {
+    "og:type",
+    "og:site_name",
+    "og:locale",
+    "og:title",
+    "og:description",
+    "og:url",
+    "og:image",
+    "og:image:secure_url",
+    "og:image:type",
+    "og:image:width",
+    "og:image:height",
+    "og:image:alt",
+    "twitter:card",
+    "twitter:title",
+    "twitter:description",
+    "twitter:image",
+    "twitter:image:alt",
+}
 
 
 class PublicLinkParser(HTMLParser):
@@ -48,6 +70,44 @@ class PublicLinkParser(HTMLParser):
         for name, value in attrs:
             if name in {"href", "src"} and value:
                 self.urls.append(value)
+
+
+class PageMetadataParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.lang = ""
+        self.in_title = False
+        self.title_parts: list[str] = []
+        self.meta: dict[str, str] = {}
+        self.canonical_urls: list[str] = []
+
+    @property
+    def title(self) -> str:
+        return "".join(self.title_parts).strip()
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        values = {name: value for name, value in attrs if value is not None}
+        if tag == "html":
+            self.lang = values.get("lang", "")
+        elif tag == "title":
+            self.in_title = True
+        elif tag == "meta":
+            key = values.get("property") or values.get("name")
+            content = values.get("content")
+            if key and content:
+                self.meta[key] = content
+        elif tag == "link" and "canonical" in values.get("rel", "").split():
+            href = values.get("href")
+            if href:
+                self.canonical_urls.append(href)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "title":
+            self.in_title = False
+
+    def handle_data(self, data: str) -> None:
+        if self.in_title:
+            self.title_parts.append(data)
 
 
 def parse_args() -> argparse.Namespace:
@@ -76,7 +136,96 @@ def verify_internal_links(output: Path) -> int:
     return checked
 
 
-def verify_public_artifact(output: Path) -> tuple[int, int]:
+def expected_public_url(page: Path, output: Path) -> str:
+    relative = page.relative_to(output)
+    if relative == Path("index.html"):
+        return PUBLIC_BASE_URL
+    return f"{PUBLIC_BASE_URL}{relative.parent.as_posix().strip('/')}/"
+
+
+def inject_social_metadata(page: Path, output: Path) -> None:
+    content = page.read_text(encoding="utf-8")
+    parser = PageMetadataParser()
+    parser.feed(content)
+    if parser.meta.get("og:title"):
+        return
+    description = parser.meta.get("description", "").strip()
+    if not parser.title or not description or parser.lang not in {"he", "en"}:
+        raise SystemExit(f"Cannot derive social metadata for {page.relative_to(output)}")
+    is_hebrew = parser.lang == "he"
+    locale = "he_IL" if is_hebrew else "en_US"
+    alternate_locale = "en_US" if is_hebrew else "he_IL"
+    site_name = "משחקי הסולם" if is_hebrew else "Ladder Learning Games"
+    image_alt = (
+        "שלושת משחקי הסולם: דגלים, חשבון ואנגלית"
+        if is_hebrew
+        else "Flag Ladder, Math Ladder, and English Ladder learning games"
+    )
+    public_url = expected_public_url(page, output)
+    values = {
+        "title": escape(parser.title, quote=True),
+        "description": escape(description, quote=True),
+        "site_name": escape(site_name, quote=True),
+        "image_alt": escape(image_alt, quote=True),
+    }
+    social_tags = f"""
+    <link rel="canonical" href="{public_url}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{values['site_name']}">
+    <meta property="og:locale" content="{locale}">
+    <meta property="og:locale:alternate" content="{alternate_locale}">
+    <meta property="og:title" content="{values['title']}">
+    <meta property="og:description" content="{values['description']}">
+    <meta property="og:url" content="{public_url}">
+    <meta property="og:image" content="{SOCIAL_IMAGE_URL}">
+    <meta property="og:image:secure_url" content="{SOCIAL_IMAGE_URL}">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1800">
+    <meta property="og:image:height" content="900">
+    <meta property="og:image:alt" content="{values['image_alt']}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{values['title']}">
+    <meta name="twitter:description" content="{values['description']}">
+    <meta name="twitter:image" content="{SOCIAL_IMAGE_URL}">
+    <meta name="twitter:image:alt" content="{values['image_alt']}">
+"""
+    if content.count("</head>") != 1:
+        raise SystemExit(f"Expected one closing head tag in {page.relative_to(output)}")
+    page.write_text(content.replace("</head>", f"{social_tags}</head>"), encoding="utf-8")
+
+
+def verify_social_metadata(output: Path) -> int:
+    checked = 0
+    for page in output.rglob("*.html"):
+        parser = PageMetadataParser()
+        parser.feed(page.read_text(encoding="utf-8"))
+        relative = page.relative_to(output)
+        expected_url = expected_public_url(page, output)
+        missing = sorted(REQUIRED_SOCIAL_META - parser.meta.keys())
+        if missing:
+            raise SystemExit(f"Missing social metadata in {relative}: {', '.join(missing)}")
+        if parser.canonical_urls != [expected_url]:
+            raise SystemExit(
+                f"Invalid canonical URL in {relative}: expected {expected_url}, got {parser.canonical_urls}"
+            )
+        if parser.meta["og:url"] != expected_url:
+            raise SystemExit(f"Open Graph URL mismatch in {relative}: {parser.meta['og:url']}")
+        if parser.meta["twitter:card"] != "summary_large_image":
+            raise SystemExit(f"Invalid Twitter card type in {relative}")
+        if parser.meta["og:image"] != SOCIAL_IMAGE_URL:
+            raise SystemExit(f"Unexpected social image in {relative}")
+        if parser.meta["og:image:secure_url"] != SOCIAL_IMAGE_URL:
+            raise SystemExit(f"Open Graph secure image URL mismatch in {relative}")
+        if parser.meta["twitter:image"] != SOCIAL_IMAGE_URL:
+            raise SystemExit(f"Twitter image URL mismatch in {relative}")
+        image_path = output / unquote(SOCIAL_IMAGE_URL.removeprefix(PUBLIC_BASE_URL))
+        if not image_path.is_file():
+            raise SystemExit(f"Social image is missing in {relative}: {SOCIAL_IMAGE_URL}")
+        checked += 1
+    return checked
+
+
+def verify_public_artifact(output: Path) -> tuple[int, int, int]:
     files = [path for path in output.rglob("*") if path.is_file()]
     for path in files:
         relative = path.relative_to(output)
@@ -92,7 +241,7 @@ def verify_public_artifact(output: Path) -> tuple[int, int]:
         for marker, description in FORBIDDEN_PUBLIC_TEXT.items():
             if marker.lower() in content.lower():
                 raise SystemExit(f"Blocked {description} in public file: {relative}")
-    return len(files), verify_internal_links(output)
+    return len(files), verify_internal_links(output), verify_social_metadata(output)
 
 
 def main() -> int:
@@ -127,14 +276,15 @@ def main() -> int:
         content = page.read_text(encoding="utf-8")
         replaced += content.count(PLACEHOLDER)
         page.write_text(content.replace(PLACEHOLDER, email), encoding="utf-8")
+        inject_social_metadata(page, output)
 
     if replaced == 0:
         raise SystemExit("Support email placeholder was not found.")
-    public_file_count, internal_link_count = verify_public_artifact(output)
+    public_file_count, internal_link_count, social_page_count = verify_public_artifact(output)
     print(
         f"Support site built: {output} "
         f"({replaced} contact placeholders resolved, {public_file_count} public web files verified, "
-        f"{internal_link_count} internal links checked)"
+        f"{internal_link_count} internal links checked, {social_page_count} social previews checked)"
     )
     return 0
 
