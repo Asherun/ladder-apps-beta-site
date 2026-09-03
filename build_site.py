@@ -7,6 +7,7 @@ import argparse
 import os
 import re
 import shutil
+from html import escape
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -51,6 +52,7 @@ FORBIDDEN_PUBLIC_TEXT = {
     "-----BEGIN EC PRIVATE KEY-----": "private key",
 }
 PUBLIC_BASE_URL = "https://asherun.github.io/ladder-apps-beta-site/"
+SOCIAL_IMAGE_URL = f"{PUBLIC_BASE_URL}assets/beta-family-hero.jpg"
 REQUIRED_SOCIAL_META = {
     "og:type",
     "og:site_name",
@@ -83,15 +85,26 @@ class PublicLinkParser(HTMLParser):
                 self.urls.append(value)
 
 
-class SocialMetaParser(HTMLParser):
+class PageMetadataParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
+        self.lang = ""
+        self.in_title = False
+        self.title_parts: list[str] = []
         self.meta: dict[str, str] = {}
         self.canonical_urls: list[str] = []
 
+    @property
+    def title(self) -> str:
+        return "".join(self.title_parts).strip()
+
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = {name: value for name, value in attrs if value is not None}
-        if tag == "meta":
+        if tag == "html":
+            self.lang = values.get("lang", "")
+        elif tag == "title":
+            self.in_title = True
+        elif tag == "meta":
             key = values.get("property") or values.get("name")
             content = values.get("content")
             if key and content:
@@ -100,6 +113,14 @@ class SocialMetaParser(HTMLParser):
             href = values.get("href")
             if href:
                 self.canonical_urls.append(href)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "title":
+            self.in_title = False
+
+    def handle_data(self, data: str) -> None:
+        if self.in_title:
+            self.title_parts.append(data)
 
 
 def parse_args() -> argparse.Namespace:
@@ -135,10 +156,61 @@ def expected_public_url(page: Path, output: Path) -> str:
     return f"{PUBLIC_BASE_URL}{relative.parent.as_posix().strip('/')}/"
 
 
+def inject_social_metadata(page: Path, output: Path) -> None:
+    content = page.read_text(encoding="utf-8")
+    parser = PageMetadataParser()
+    parser.feed(content)
+    if parser.meta.get("og:title"):
+        return
+    description = parser.meta.get("description", "").strip()
+    if not parser.title or not description or parser.lang not in {"he", "en"}:
+        raise SystemExit(f"Cannot derive social metadata for {page.relative_to(output)}")
+    is_hebrew = parser.lang == "he"
+    locale = "he_IL" if is_hebrew else "en_US"
+    alternate_locale = "en_US" if is_hebrew else "he_IL"
+    site_name = "משחקי הסולם" if is_hebrew else "Ladder Learning Games"
+    image_alt = (
+        "שלושת משחקי הסולם: דגלים, חשבון ואנגלית"
+        if is_hebrew
+        else "Flag Ladder, Math Ladder, and English Ladder learning games"
+    )
+    public_url = expected_public_url(page, output)
+    values = {
+        "title": escape(parser.title, quote=True),
+        "description": escape(description, quote=True),
+        "site_name": escape(site_name, quote=True),
+        "image_alt": escape(image_alt, quote=True),
+    }
+    social_tags = f"""
+    <link rel="canonical" href="{public_url}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{values['site_name']}">
+    <meta property="og:locale" content="{locale}">
+    <meta property="og:locale:alternate" content="{alternate_locale}">
+    <meta property="og:title" content="{values['title']}">
+    <meta property="og:description" content="{values['description']}">
+    <meta property="og:url" content="{public_url}">
+    <meta property="og:image" content="{SOCIAL_IMAGE_URL}">
+    <meta property="og:image:secure_url" content="{SOCIAL_IMAGE_URL}">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1800">
+    <meta property="og:image:height" content="900">
+    <meta property="og:image:alt" content="{values['image_alt']}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{values['title']}">
+    <meta name="twitter:description" content="{values['description']}">
+    <meta name="twitter:image" content="{SOCIAL_IMAGE_URL}">
+    <meta name="twitter:image:alt" content="{values['image_alt']}">
+"""
+    if content.count("</head>") != 1:
+        raise SystemExit(f"Expected one closing head tag in {page.relative_to(output)}")
+    page.write_text(content.replace("</head>", f"{social_tags}</head>"), encoding="utf-8")
+
+
 def verify_social_metadata(output: Path) -> int:
     checked = 0
     for page in output.rglob("*.html"):
-        parser = SocialMetaParser()
+        parser = PageMetadataParser()
         parser.feed(page.read_text(encoding="utf-8"))
         relative = page.relative_to(output)
         expected_url = expected_public_url(page, output)
@@ -246,6 +318,7 @@ def main() -> int:
             replaced[placeholder] += content.count(placeholder)
             content = content.replace(placeholder, value)
         page.write_text(content, encoding="utf-8")
+        inject_social_metadata(page, output)
 
     missing_placeholders = [placeholder for placeholder, count in replaced.items() if count == 0]
     if missing_placeholders:
