@@ -694,6 +694,10 @@ h3 {
     margin-block-end: 8px;
 }
 
+.subpage-hero a[href^="mailto:"] {
+    overflow-wrap: anywhere;
+}
+
 .policy-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 260px;
