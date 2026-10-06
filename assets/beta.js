@@ -32,11 +32,13 @@
     const appLabels = isEnglish ? {
         "flag-ladder": "Flag Ladder",
         "math-ladder": "Math Ladder",
-        "english-ladder": "English Ladder"
+        "english-ladder": "English Ladder",
+        "confused-robot": "The Confused Robot"
     } : {
         "flag-ladder": "סולם הדגלים",
         "math-ladder": "סולם החשבון",
-        "english-ladder": "סולם האנגלית"
+        "english-ladder": "סולם האנגלית",
+        "confused-robot": "הרובוט המבולבל"
     };
     const platformLabels = {
         ios: isEnglish ? "iPhone / iPad" : "iPhone או iPad",

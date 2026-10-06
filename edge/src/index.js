@@ -1,4 +1,4 @@
-const APP_IDS = new Set(["flag-ladder", "math-ladder", "english-ladder"]);
+const APP_IDS = new Set(["flag-ladder", "math-ladder", "english-ladder", "confused-robot"]);
 const PLATFORM_IDS = new Set(["ios", "tvos"]);
 const BACKGROUNDS = new Set(["unspecified", "parent", "educator", "software", "other"]);
 const LOCALES = new Set(["he", "en"]);
@@ -101,7 +101,7 @@ export function normalizeSubmission(input) {
         firstName,
         lastName,
         email,
-        apps: requireEnumArray(input.apps, "apps", APP_IDS, 3),
+        apps: requireEnumArray(input.apps, "apps", APP_IDS, APP_IDS.size),
         platforms: requireEnumArray(input.platforms, "platforms", PLATFORM_IDS, 2),
         background,
         notes,

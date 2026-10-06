@@ -239,3 +239,32 @@ test("rejects malformed allowlist values before storage", async () => {
     assert.equal(result.status, 400);
     assert.equal(env.DB.rows.length, 0);
 });
+
+for (const apps of [["confused-robot"], ["flag-ladder", "math-ladder", "english-ladder", "confused-robot"]]) {
+    test(`stores and syncs ${apps.length === 1 ? "Robot only" : "all four apps"} as pending`, async () => {
+        const env = testEnvironment();
+        const handle = handlerWithCaptcha();
+        const result = await handle(publicRequest(validPayload({ apps })), env);
+        assert.equal(result.status, 202);
+        assert.deepEqual(JSON.parse(env.DB.rows[0].apps_json), [...apps].sort());
+        assert.equal(env.DB.rows[0].status, "pending");
+        const response = await handle(new Request("https://waitlist.example.workers.dev/v1/admin/submissions", {
+            headers: { authorization: `Bearer ${env.SYNC_API_TOKEN}` }
+        }), env);
+        const record = (await response.json()).submissions[0];
+        assert.deepEqual(record.apps, [...apps].sort());
+    });
+}
+
+for (const [name, overrides] of [
+    ["Robot without adult consent", { apps: ["confused-robot"], adultConsent: false }],
+    ["duplicate Robot", { apps: ["confused-robot", "confused-robot"] }],
+    ["five games", { apps: ["flag-ladder", "math-ladder", "english-ladder", "confused-robot", "unknown-game"] }]
+]) {
+    test(`rejects ${name}`, async () => {
+        const env = testEnvironment();
+        const result = await handlerWithCaptcha()(publicRequest(validPayload(overrides)), env);
+        assert.equal(result.status, 400);
+        assert.equal(env.DB.rows.length, 0);
+    });
+}
