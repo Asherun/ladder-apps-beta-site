@@ -1,6 +1,6 @@
 # Ladder Apps Support Site
 
-Static bilingual Hebrew/English showcase, beta waitlist, support, privacy, and terms pages for Flag Ladder, Math Ladder, and English Ladder. Hebrew pages use full RTL layout; their English counterparts use LTR layout with a page-level language switch.
+Static bilingual Hebrew/English showcase, beta waitlist, support, privacy, and terms pages for Flag Ladder, Math Ladder, English Ladder, and The Confused Robot. Hebrew pages use full RTL layout; their English counterparts use LTR layout with a page-level language switch.
 
 Typography uses a locally hosted Hebrew and Latin subset of Rubik. The font files and their SIL Open Font License are stored in `assets/fonts/`; the public site does not contact a font CDN at runtime.
 
@@ -25,6 +25,7 @@ Do not publish the source directory while placeholders remain. The browser submi
 - `/flag/` - Flag Ladder support
 - `/math/` - Math Ladder support
 - `/english/` - English Ladder support
+- `/robot/`, `/en/robot/` - Robot information, support, and controlled beta registration
 - `/beta/` - controlled adult beta waitlist with no public TestFlight links
 - `/en/` - English showcase and support hub
 - `/en/privacy/`, `/en/terms/`, `/en/beta/` - English legal and beta pages
@@ -33,3 +34,8 @@ Do not publish the source directory while placeholders remain. The browser submi
 Deployment notes for GitHub Pages are in `DEPLOYMENT_HE.md`. Worker provisioning and security controls are documented in `edge/README.md`.
 
 The legal pages are an operational draft and should be reviewed by the account owner, and by qualified counsel when needed, before public release.
+
+The October 7 privacy update covers optional parent accounts, Cloudflare hosting,
+Qonversion entitlement verification, and account deletion separately from Apple
+subscription cancellation. It does not announce live bundle availability.
+Robot beta links preselect the game, never adult consent, and never submit a form.
