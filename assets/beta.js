@@ -197,5 +197,12 @@
         }
     });
 
+    // A game-specific entry point selects only the game, never consent or submission.
+    const requestedApp = new URLSearchParams(window.location?.search || "").get("app");
+    if (Object.hasOwn(appLabels, requestedApp)) {
+        form.querySelectorAll('input[name="apps"]').forEach((input) => {
+            if (input.value === requestedApp) input.checked = true;
+        });
+    }
     updateState();
 })();
