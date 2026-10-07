@@ -1648,3 +1648,12 @@ h3 {
         transition: none;
     }
 }
+
+/* Public store releases stay separate from the beta signup flow. */
+.store-downloads { margin-block-end: 64px; }
+.store-downloads > p { max-width: 78ch; }
+.store-downloads .app-list { margin-block-start: 24px; }
+.store-downloads .app-card { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.store-downloads .app-card a { margin-block-start: auto; }
+.store-downloads .app-store-badge { display: inline-flex; padding: 12px; border-radius: 0; transition: none; }
+.store-downloads .app-store-badge img { display: block; height: 48px; width: auto; max-width: 100%; border-radius: 0; box-shadow: none; }
