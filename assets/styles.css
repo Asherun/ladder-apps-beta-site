@@ -35,6 +35,7 @@
     --sky: #edf5fb;
     --warm: #fff6e5;
     --night: #102e42;
+    --robot-mist: #dcebe9;
     --shadow: 0 18px 50px rgba(16, 42, 67, 0.10);
     --content: 1180px;
     --radius-small: 12px;
@@ -428,6 +429,11 @@ h3 {
     font-size: 0.88rem;
 }
 
+#games-title,
+#robot-title {
+    scroll-margin-top: 150px;
+}
+
 .games-overview {
     padding-block: 92px;
     background: linear-gradient(180deg, #ffffff 0%, #f7fbfa 65%, var(--mint) 100%);
@@ -450,7 +456,7 @@ h3 {
 
 .app-list {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px;
 }
 
@@ -505,11 +511,15 @@ h3 {
 }
 
 .showcase.is-english {
+    background: linear-gradient(180deg, var(--sky) 0%, #e4f2f8 64%, var(--robot-mist) 100%);
+}
+
+.showcase.is-robot {
     padding-block-end: 156px;
     background: linear-gradient(
         180deg,
-        var(--sky) 0%,
-        #e4f2f8 64%,
+        var(--robot-mist) 0%,
+        #d6e9df 58%,
         #abcbd4 88%,
         var(--night) 100%
     );
@@ -527,7 +537,8 @@ h3 {
     grid-row: 1;
 }
 
-.showcase.is-reversed .device-shot {
+.showcase.is-reversed .device-shot,
+.showcase.is-reversed .robot-art {
     grid-column: 1;
     grid-row: 1;
 }
@@ -577,6 +588,28 @@ h3 {
     aspect-ratio: 9 / 19.5;
     object-fit: cover;
     border-radius: 28px;
+}
+
+.robot-art {
+    justify-self: center;
+    width: min(100%, 400px);
+    margin: 0;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 48px;
+    background: rgba(255, 255, 255, 0.30);
+    box-shadow: var(--shadow);
+}
+
+.robot-art img {
+    width: 100%;
+    height: auto;
+    border-radius: 32px;
+}
+
+.showcase-copy .robot-beta-note {
+    margin-block: 16px 0;
+    font-size: 0.88rem;
 }
 
 .beta-callout {
@@ -1377,7 +1410,8 @@ h3 {
 
     .showcase-copy,
     .showcase.is-reversed .showcase-copy,
-    .showcase.is-reversed .device-shot {
+    .showcase.is-reversed .device-shot,
+    .showcase.is-reversed .robot-art {
         grid-column: 1;
         grid-row: auto;
     }
