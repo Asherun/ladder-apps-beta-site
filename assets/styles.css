@@ -1657,3 +1657,231 @@ h3 {
 .store-downloads .app-card a { margin-block-start: auto; }
 .store-downloads .app-store-badge { display: inline-flex; padding: 12px; border-radius: 0; transition: none; }
 .store-downloads .app-store-badge img { display: block; height: 48px; width: auto; max-width: 100%; border-radius: 0; box-shadow: none; }
+
+/* Downloads first (2026-10-15): every game is one tap from its App Store page. */
+.app-store-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    border-radius: 9px;
+    transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.app-store-badge img {
+    display: block;
+    width: auto;
+    height: 48px;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.app-store-badge:hover,
+.app-store-badge:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(16, 42, 67, 0.18);
+}
+
+.hero-apps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px 22px;
+    margin: 34px auto 0;
+    padding: 0;
+    list-style: none;
+}
+
+.hero-apps a {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    width: 104px;
+    color: var(--ink);
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.3;
+    text-decoration: none;
+}
+
+.hero-apps img {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    box-shadow: 0 12px 26px rgba(16, 42, 67, 0.16);
+    transition: transform 180ms ease;
+}
+
+.hero-apps a:hover img,
+.hero-apps a:focus-visible img {
+    transform: translateY(-4px) scale(1.04);
+}
+
+.hero-apps small {
+    color: var(--teal-dark);
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.games-overview .app-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.app-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0 18px;
+    padding: 0;
+    list-style: none;
+}
+
+.app-card-meta li {
+    border-radius: var(--radius-pill);
+    padding: 4px 12px;
+    color: var(--teal-dark);
+    background: var(--mint);
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.app-card-meta li.is-free {
+    color: #7a4b00;
+    background: var(--warm);
+}
+
+.app-card-actions,
+.store-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 18px;
+    margin-block-start: auto;
+}
+
+.store-row {
+    margin-block-start: 22px;
+}
+
+.family-plan {
+    padding-block: 84px;
+    background: linear-gradient(180deg, var(--warm) 0%, #ffffff 100%);
+    border-block: 1px solid var(--line);
+}
+
+.family-plan-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 40px;
+}
+
+.family-plan h2 {
+    margin-block-end: 10px;
+}
+
+.family-plan p {
+    max-width: 62ch;
+    color: var(--muted);
+    font-size: 1.06rem;
+}
+
+.family-icons {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.family-icons li + li {
+    margin-inline-start: -18px;
+}
+
+.family-icons img {
+    width: 96px;
+    height: 96px;
+    border: 4px solid #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 14px 30px rgba(16, 42, 67, 0.16);
+}
+
+.download-panel {
+    display: grid;
+    gap: 12px;
+    margin-block: 22px 8px;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-medium);
+    background: #ffffff;
+    box-shadow: 0 12px 30px rgba(16, 42, 67, 0.07);
+}
+
+.download-panel .app-card-meta {
+    margin: 0;
+}
+
+.download-panel p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+}
+
+@media (max-width: 760px) {
+    .family-plan-inner {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+    }
+
+    .family-plan p {
+        margin-inline: auto;
+    }
+
+    .family-icons img {
+        width: 72px;
+        height: 72px;
+        border-radius: 18px;
+    }
+
+    .hero-apps {
+        gap: 12px 8px;
+    }
+
+    .hero-apps a {
+        width: 76px;
+        font-size: 0.8rem;
+    }
+
+    .hero-apps img {
+        width: 64px;
+        height: 64px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .app-store-badge,
+    .hero-apps img {
+        transition: none;
+    }
+
+    .app-store-badge:hover,
+    .hero-apps a:hover img {
+        transform: none;
+    }
+}
+
+@media (max-width: 560px) {
+    /* Phones: the icon sits above the text, so the download panel gets the full width. */
+    .subpage-hero,
+    .subpage-hero.is-legal {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    .subpage-hero .app-icon,
+    .subpage-hero .brand-mark {
+        width: 72px;
+        height: 72px;
+    }
+}
