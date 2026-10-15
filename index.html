@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="משחקי הסולם הם משחקי למידה לדגלים, חשבון, אנגלית ושאלות נכון או לא נכון. הכירו את המשחקים והצטרפו לרשימת ההמתנה לבדיקות הבטא.">
+    <meta name="description" content="ארבעה משחקי למידה בעברית לילדים: דגלים, חשבון, אנגלית והרובוט המבולבל. בוחרים משחק, מורידים מה־App Store ומתחילים בחינם.">
     <title>משחקי הסולם | ללמוד, לשחק ולטפס</title>
     <link rel="canonical" href="https://asherun.github.io/ladder-apps-beta-site/">
     <meta property="og:type" content="website">
@@ -26,9 +26,11 @@
     <meta name="twitter:image:alt" content="שלושת משחקי הסולם: דגלים, חשבון ואנגלית">
     <link rel="icon" href="assets/ladder-learning-logo.png">
     <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/carousel.css">
     <script src="assets/site.js" defer></script>
+    <script src="assets/carousel.js" defer></script>
 </head>
-<body>
+<body class="home-page">
     <a class="skip-link" href="#main-content">דילוג לתוכן</a>
     <header class="site-header">
         <div class="header-inner">
@@ -49,189 +51,122 @@
     </header>
 
     <main id="main-content">
-        <section class="home-hero" aria-labelledby="hero-title">
-            <div class="home-hero-inner">
-                <img class="hero-logo" src="assets/ladder-learning-logo.png" alt="לוגו משחקי הסולם">
-                <p class="eyebrow">משחקי למידה לילדים, עכשיו ב־App Store</p>
-                <h1 id="hero-title">ללמוד. לשחק. לטפס.</h1>
-                <p class="hero-lead">ארבעה משחקים בעברית: דגלים, חשבון, אנגלית ומדע. שלבים קצרים, משוב מיידי ותחושת הצלחה בכל מדרגה. השלבים הראשונים בחינם.</p>
-                <div class="hero-actions">
-                    <a class="primary-action" href="#games-title">בחרו משחק והורידו</a>
-                    <a class="secondary-action" href="#family-title">מנוי אחד לכל המשחקים</a>
-                </div>
-                <ul class="hero-apps" aria-label="להורדה ב־App Store">
-                    <li><a href="https://apps.apple.com/il/app/%D7%A1%D7%95%D7%9C%D7%9D-%D7%94%D7%93%D7%92%D7%9C%D7%99%D7%9D/id6802382851" aria-label="סולם הדגלים: להורדה ב־App Store"><img src="assets/flag-ladder.png" alt="" width="72" height="72">סולם הדגלים<small>להורדה</small></a></li>
-                    <li><a href="https://apps.apple.com/il/app/%D7%A1%D7%95%D7%9C%D7%9D-%D7%94%D7%97%D7%A9%D7%91%D7%95%D7%9F/id6806677285" aria-label="סולם החשבון: להורדה ב־App Store"><img src="assets/math-ladder.png" alt="" width="72" height="72">סולם החשבון<small>להורדה</small></a></li>
-                    <li><a href="https://apps.apple.com/il/app/%D7%A1%D7%95%D7%9C%D7%9D-%D7%94%D7%90%D7%A0%D7%92%D7%9C%D7%99%D7%AA/id6807340912" aria-label="סולם האנגלית: להורדה ב־App Store"><img src="assets/english-ladder.png" alt="" width="72" height="72">סולם האנגלית<small>להורדה</small></a></li>
-                    <li><a href="https://apps.apple.com/il/app/%D7%94%D7%A8%D7%95%D7%91%D7%95%D7%98-%D7%94%D7%9E%D7%91%D7%95%D7%9C%D7%91%D7%9C/id6813171077" aria-label="הרובוט המבולבל: להורדה ב־App Store"><img src="assets/confused-robot.png" alt="" width="72" height="72">הרובוט המבולבל<small>להורדה</small></a></li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="hero-facts-band" aria-label="משחקי הסולם במספרים">
-            <div class="hero-facts">
-                <div><strong>4</strong><span>משחקי למידה בעברית</span></div>
-                <div><strong>iPhone · iPad · TV</strong><span>חוויה שמתאימה למכשיר</span></div>
-                <div><strong>מתחילים בחינם</strong><span>השלבים הראשונים פתוחים</span></div>
-            </div>
-        </section>
-
-        <section class="games-overview" aria-labelledby="games-title">
-            <div class="section-inner">
-                <div class="section-heading is-centered" data-reveal>
-                    <p class="section-kicker">משפחה אחת, ארבעה משחקים</p>
-                    <h2 id="games-title">בחרו משחק והתחילו לטפס</h2>
-                    <p>כל משחק מתמקד בעולם תוכן אחר, ושומר על אותה חוויה נעימה וברורה. מורידים מה־App Store, מתחילים בחינם, ובוחרים אם להמשיך.</p>
-                </div>
-                <div class="app-list">
-                    <article class="app-card" data-reveal>
-                        <div class="app-card-header">
-                            <img src="assets/flag-ladder.png" alt="אייקון סולם הדגלים">
-                            <div><p class="section-kicker">גאוגרפיה</p><h3>סולם הדגלים</h3></div>
+        <section id="games-title" class="game-carousel" data-carousel data-game="flag" role="region" aria-roledescription="קרוסלה" aria-labelledby="hero-title">
+            <div class="carousel-heading"><h1 id="hero-title">משחקי הסולם</h1><a href="#family-title">מנוי אחד לכל המשחקים</a></div>
+            <div class="carousel-stage">
+                <article class="carousel-slide" id="slide-flag" data-slide="flag" data-title="סולם הדגלים" role="group" aria-roledescription="שקופית" aria-labelledby="slide-title-flag">
+                    <div class="carousel-copy">
+                        <p class="section-kicker">משחקי למידה בעברית · מתחילים בחינם</p>
+                        <h2 id="slide-title-flag">סולם הדגלים</h2>
+                        <p class="carousel-lead">מזהים את הדגל? כל תשובה נכונה היא עוד צעד במסע מסביב לעולם.</p>
+                        <div class="carousel-actions">
+                            <a class="app-store-badge" href="https://apps.apple.com/il/app/id6802382851" aria-label="סולם הדגלים: להורדה ב־App Store"><img src="assets/app-store/download-he.svg" alt="" width="139" height="48"></a>
+                            <a class="text-action" href="flag/">עוד על המשחק</a>
                         </div>
-                        <p>מזהים דגלים ומדינות במסעות קצרים מסביב לעולם, אוספים כוכבים ונלחמים בבוסים.</p>
-                        <ul class="app-card-meta" aria-label="פרטים"><li>iPhone</li><li>iPad</li><li>Apple TV</li><li class="is-free">5 מסעות ראשונים חינם</li></ul>
-                        <div class="app-card-actions"><a class="app-store-badge" href="https://apps.apple.com/il/app/%D7%A1%D7%95%D7%9C%D7%9D-%D7%94%D7%93%D7%92%D7%9C%D7%99%D7%9D/id6802382851" aria-label="סולם הדגלים: להורדה ב־App Store"><img src="assets/app-store/download-he.svg" alt="" width="139" height="48" loading="lazy"></a><a class="text-action" href="flag/">מידע ותמיכה</a></div>
-                    </article>
-                    <article class="app-card" data-reveal>
-                        <div class="app-card-header">
-                            <img src="assets/math-ladder.png" alt="אייקון סולם החשבון">
-                            <div><p class="section-kicker">חשבון</p><h3>סולם החשבון</h3></div>
+                        <p class="carousel-proof">194 דגלים · 5 מסעות ראשונים בחינם</p>
+                        <p class="carousel-platform" dir="ltr">iPhone · iPad · Apple TV</p>
+                    </div>
+                    <figure class="carousel-media">
+                        <img class="carousel-peek" src="assets/math-gameplay.jpg" alt="" aria-hidden="true" width="736" height="1600" loading="lazy" decoding="async" draggable="false">
+                        <img class="carousel-shot" src="assets/flag-gameplay.jpg" alt="שאלת זיהוי דגל ישראל בסולם הדגלים" width="736" height="1600" fetchpriority="high" decoding="async" draggable="false">
+                    </figure>
+                </article>
+                <article class="carousel-slide" id="slide-math" data-slide="math" data-title="סולם החשבון" role="group" aria-roledescription="שקופית" aria-labelledby="slide-title-math" hidden>
+                    <div class="carousel-copy">
+                        <p class="section-kicker">משחקי למידה בעברית · מתחילים בחינם</p>
+                        <h2 id="slide-title-math">סולם החשבון</h2>
+                        <p class="carousel-lead">כמה זה 14 פחות 1? חושבים, בוחרים ומטפסים עוד שלב בסולם.</p>
+                        <div class="carousel-actions">
+                            <a class="app-store-badge" href="https://apps.apple.com/il/app/id6806677285" aria-label="סולם החשבון: להורדה ב־App Store"><img src="assets/app-store/download-he.svg" alt="" width="139" height="48"></a>
+                            <a class="text-action" href="math/">עוד על המשחק</a>
                         </div>
-                        <p>מתרגלים חשבון בקצב אישי: שלבים מדורגים, משוב מיידי וכוכבים על כל הצלחה.</p>
-                        <ul class="app-card-meta" aria-label="פרטים"><li>iPhone</li><li>iPad</li><li>Apple TV</li><li class="is-free">5 שלבים ראשונים חינם</li></ul>
-                        <div class="app-card-actions"><a class="app-store-badge" href="https://apps.apple.com/il/app/%D7%A1%D7%95%D7%9C%D7%9D-%D7%94%D7%97%D7%A9%D7%91%D7%95%D7%9F/id6806677285" aria-label="סולם החשבון: להורדה ב־App Store"><img src="assets/app-store/download-he.svg" alt="" width="139" height="48" loading="lazy"></a><a class="text-action" href="math/">מידע ותמיכה</a></div>
-                    </article>
-                    <article class="app-card" data-reveal>
-                        <div class="app-card-header">
-                            <img src="assets/english-ladder.png" alt="אייקון סולם האנגלית">
-                            <div><p class="section-kicker">אנגלית</p><h3>סולם האנגלית</h3></div>
+                        <p class="carousel-proof">50 שלבים · 5 שלבים ראשונים בחינם</p>
+                        <p class="carousel-platform" dir="ltr">iPhone · iPad · Apple TV</p>
+                    </div>
+                    <figure class="carousel-media">
+                        <img class="carousel-peek" src="assets/english-gameplay.jpg" alt="" aria-hidden="true" width="736" height="1600" loading="lazy" decoding="async" draggable="false">
+                        <img class="carousel-shot" src="assets/math-gameplay.jpg" alt="תרגיל חיסור 14 פחות 1 בסולם החשבון" width="736" height="1600" loading="lazy" decoding="async" draggable="false">
+                    </figure>
+                </article>
+                <article class="carousel-slide" id="slide-english" data-slide="english" data-title="סולם האנגלית" role="group" aria-roledescription="שקופית" aria-labelledby="slide-title-english" hidden>
+                    <div class="carousel-copy">
+                        <p class="section-kicker">משחקי למידה בעברית · מתחילים בחינם</p>
+                        <h2 id="slide-title-english">סולם האנגלית</h2>
+                        <p class="carousel-lead">מה זה book? מגלים מילה חדשה, בוחרים תשובה וממשיכים לטפס.</p>
+                        <div class="carousel-actions">
+                            <a class="app-store-badge" href="https://apps.apple.com/il/app/id6807340912" aria-label="סולם האנגלית: להורדה ב־App Store"><img src="assets/app-store/download-he.svg" alt="" width="139" height="48"></a>
+                            <a class="text-action" href="english/">עוד על המשחק</a>
                         </div>
-                        <p>לומדים מילים באנגלית עם תמונה, משמעות והגייה, נושא אחרי נושא.</p>
-                        <ul class="app-card-meta" aria-label="פרטים"><li>iPhone</li><li>iPad</li><li>Apple TV</li><li class="is-free">5 נושאים ראשונים חינם</li></ul>
-                        <div class="app-card-actions"><a class="app-store-badge" href="https://apps.apple.com/il/app/%D7%A1%D7%95%D7%9C%D7%9D-%D7%94%D7%90%D7%A0%D7%92%D7%9C%D7%99%D7%AA/id6807340912" aria-label="סולם האנגלית: להורדה ב־App Store"><img src="assets/app-store/download-he.svg" alt="" width="139" height="48" loading="lazy"></a><a class="text-action" href="english/">מידע ותמיכה</a></div>
-                    </article>
-                    <article class="app-card" data-reveal>
-                        <div class="app-card-header">
-                            <img src="assets/confused-robot.png" alt="האייקון המקורי של הרובוט המבולבל" width="72" height="72" loading="lazy">
-                            <div><p class="section-kicker">סקרנות וחשיבה</p><h3>הרובוט המבולבל</h3></div>
+                        <p class="carousel-proof">50 נושאים · 5 נושאים ראשונים בחינם</p>
+                        <p class="carousel-platform" dir="ltr">iPhone · iPad · Apple TV</p>
+                    </div>
+                    <figure class="carousel-media">
+                        <img class="carousel-peek" src="assets/robot-gameplay.jpg" alt="" aria-hidden="true" width="736" height="1600" loading="lazy" decoding="async" draggable="false">
+                        <img class="carousel-shot" src="assets/english-gameplay.jpg" alt="תרגול המילה book בסולם האנגלית" width="736" height="1600" loading="lazy" decoding="async" draggable="false">
+                    </figure>
+                </article>
+                <article class="carousel-slide" id="slide-robot" data-slide="robot" data-title="הרובוט המבולבל" role="group" aria-roledescription="שקופית" aria-labelledby="slide-title-robot" hidden>
+                    <div class="carousel-copy">
+                        <p class="section-kicker">משחקי למידה בעברית · מתחילים בחינם</p>
+                        <h2 id="slide-title-robot">הרובוט המבולבל</h2>
+                        <p class="carousel-lead">השמש היא כוכב. נכון או לא נכון? עוזרים לרובוט לגלות את התשובה.</p>
+                        <div class="carousel-actions">
+                            <a class="app-store-badge" href="https://apps.apple.com/il/app/id6813171077" aria-label="הרובוט המבולבל: להורדה ב־App Store"><img src="assets/app-store/download-he.svg" alt="" width="139" height="48"></a>
+                            <a class="text-action" href="robot/">עוד על המשחק</a>
                         </div>
-                        <p>מסע במפעל תלת־ממדי: עונים נכון או לא נכון, שומעים הסבר קצר ועוזרים לרובוט למצוא את הדרך.</p>
-                        <ul class="app-card-meta" aria-label="פרטים"><li>iPhone</li><li>iPad</li><li class="is-free">2 עולמות ראשונים חינם</li></ul>
-                        <div class="app-card-actions"><a class="app-store-badge" href="https://apps.apple.com/il/app/%D7%94%D7%A8%D7%95%D7%91%D7%95%D7%98-%D7%94%D7%9E%D7%91%D7%95%D7%9C%D7%91%D7%9C/id6813171077" aria-label="הרובוט המבולבל: להורדה ב־App Store"><img src="assets/app-store/download-he.svg" alt="" width="139" height="48" loading="lazy"></a><a class="text-action" href="robot/">מידע ותמיכה</a></div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section class="showcase is-flags" aria-labelledby="flags-title">
-            <div class="section-inner showcase-inner">
-                <div class="showcase-copy" data-reveal>
-                    <p class="section-kicker">לגלות את העולם</p>
-                    <div class="showcase-title-row">
-                        <img src="assets/flag-ladder.png" alt="">
-                        <h2 id="flags-title">סולם הדגלים</h2>
+                        <p class="carousel-proof">6 עולמות · 2 עולמות ראשונים בחינם</p>
+                        <p class="carousel-platform" dir="ltr">iPhone · iPad</p>
                     </div>
-                    <p>מסעות בין אזורים ויבשות הופכים ידע גאוגרפי להרפתקה שקל לחזור אליה. כל שלב מעניק הזדמנות להשתפר, לצבור כוכבים ולגלות עוד מדינות.</p>
-                    <div class="store-row"><a class="app-store-badge" href="https://apps.apple.com/il/app/%D7%A1%D7%95%D7%9C%D7%9D-%D7%94%D7%93%D7%92%D7%9C%D7%99%D7%9D/id6802382851" aria-label="סולם הדגלים: להורדה ב־App Store"><img src="assets/app-store/download-he.svg" alt="" width="139" height="48" loading="lazy"></a><a class="text-action" href="flag/">מידע ותמיכה</a></div>
-                </div>
-                <figure class="device-shot" data-reveal>
-                    <img src="assets/flag-gameplay.jpg" alt="שאלת זיהוי דגל בתוך סולם הדגלים">
-                </figure>
+                    <figure class="carousel-media">
+                        <img class="carousel-peek" src="assets/flag-gameplay.jpg" alt="" aria-hidden="true" width="736" height="1600" loading="lazy" decoding="async" draggable="false">
+                        <img class="carousel-shot" src="assets/robot-gameplay.jpg" alt="הרובוט במפעל עם השאלה השמש היא כוכב" width="736" height="1600" loading="lazy" decoding="async" draggable="false">
+                    </figure>
+                </article>
             </div>
+            <div class="carousel-controls" data-carousel-controls hidden>
+                <button type="button" class="carousel-arrow" data-step="-1" aria-label="המשחק הקודם" title="המשחק הקודם"><img src="assets/carousel-chevron-left.svg" alt="" width="22" height="22"></button>
+                <div class="carousel-dock" role="group" aria-label="בחירת משחק">
+                    <button type="button" data-select="flag" aria-label="סולם הדגלים" aria-pressed="true" aria-controls="slide-flag"><img src="assets/flag-ladder.png" alt="" width="48" height="48" draggable="false"><span>דגלים</span></button>
+                    <button type="button" data-select="math" aria-label="סולם החשבון" aria-pressed="false" aria-controls="slide-math"><img src="assets/math-ladder.png" alt="" width="48" height="48" draggable="false"><span>חשבון</span></button>
+                    <button type="button" data-select="english" aria-label="סולם האנגלית" aria-pressed="false" aria-controls="slide-english"><img src="assets/english-ladder.png" alt="" width="48" height="48" draggable="false"><span>אנגלית</span></button>
+                    <button type="button" data-select="robot" aria-label="הרובוט המבולבל" aria-pressed="false" aria-controls="slide-robot"><img src="assets/confused-robot.png" alt="" width="48" height="48" draggable="false"><span>הרובוט</span></button>
+                </div>
+                <button type="button" class="carousel-arrow" data-step="1" aria-label="המשחק הבא" title="המשחק הבא"><img src="assets/carousel-chevron-left.svg" alt="" width="22" height="22"></button>
+            </div>
+            <p class="carousel-counter" data-carousel-counter dir="ltr" aria-hidden="true">1 / 4</p>
+            <p class="carousel-status" data-carousel-status role="status" aria-live="polite" aria-atomic="true"></p>
+            <noscript>
+                <nav class="carousel-fallback" aria-label="הורדת המשחקים">
+                    <a href="https://apps.apple.com/il/app/id6802382851">סולם הדגלים</a>
+                    <a href="https://apps.apple.com/il/app/id6806677285">סולם החשבון</a>
+                    <a href="https://apps.apple.com/il/app/id6807340912">סולם האנגלית</a>
+                    <a href="https://apps.apple.com/il/app/id6813171077">הרובוט המבולבל</a>
+                </nav>
+            </noscript>
         </section>
 
-        <section class="showcase is-math is-reversed" aria-labelledby="math-title">
-            <div class="section-inner showcase-inner">
-                <div class="showcase-copy" data-reveal>
-                    <p class="section-kicker">ביטחון דרך תרגול</p>
-                    <div class="showcase-title-row">
-                        <img src="assets/math-ladder.png" alt="">
-                        <h2 id="math-title">סולם החשבון</h2>
-                    </div>
-                    <p>תרגילים קצרים, תשובות ברורות והתקדמות מדורגת עוזרים להפוך אימון בחשבון להרגל חיובי שמרגיש כמו משחק.</p>
-                    <div class="store-row"><a class="app-store-badge" href="https://apps.apple.com/il/app/%D7%A1%D7%95%D7%9C%D7%9D-%D7%94%D7%97%D7%A9%D7%91%D7%95%D7%9F/id6806677285" aria-label="סולם החשבון: להורדה ב־App Store"><img src="assets/app-store/download-he.svg" alt="" width="139" height="48" loading="lazy"></a><a class="text-action" href="math/">מידע ותמיכה</a></div>
+        <section class="home-essentials" aria-labelledby="family-title">
+            <div class="section-inner home-essentials-inner">
+                <h2 id="family-title">לפני שמתחילים</h2>
+                <div class="home-questions">
+                    <details open>
+                        <summary>איך עובד המנוי לכל ארבע האפליקציות?</summary>
+                        <p>מנוי התוכן המשותף פותח את תוכן הלמידה בדגלים, חשבון, אנגלית והרובוט, כל עוד הוא פעיל. לשימוש במנוי במשחקים האחרים מתחברים עם אותו חשבון הורה. המחיר והתנאים מוצגים באפליקציה לפני הרכישה.</p>
+                    </details>
+                    <details>
+                        <summary>אפשר להתחיל בלי מנוי?</summary>
+                        <p>כן. חמשת המסעות, השלבים או הנושאים הראשונים במשחקי הסולם פתוחים בחינם, וברובוט פתוחים שני העולמות הראשונים. אפשר לשחק בתוכן החינמי בלי הרשמה; הרחבת התוכן זמינה ברכישה בתוך האפליקציה.</p>
+                    </details>
+                    <details>
+                        <summary>באילו מכשירים אפשר לשחק?</summary>
+                        <p>כל ארבעת המשחקים זמינים ב־iPhone וב־iPad. סולם הדגלים, סולם החשבון וסולם האנגלית זמינים גם ב־Apple TV.</p>
+                    </details>
                 </div>
-                <figure class="device-shot" data-reveal>
-                    <img src="assets/math-gameplay.jpg" alt="תרגיל חיסור בתוך סולם החשבון">
-                </figure>
-            </div>
-        </section>
-
-        <section class="showcase is-english" aria-labelledby="english-title">
-            <div class="section-inner showcase-inner">
-                <div class="showcase-copy" data-reveal>
-                    <p class="section-kicker">מילים שהופכות לשפה</p>
-                    <div class="showcase-title-row">
-                        <img src="assets/english-ladder.png" alt="">
-                        <h2 id="english-title">סולם האנגלית</h2>
-                    </div>
-                    <p>תמונות, מילים והגייה מתחברים לחוויה שמאפשרת ללמוד אוצר מילים שימושי באופן ממוקד, צבעוני ונגיש.</p>
-                    <div class="store-row"><a class="app-store-badge" href="https://apps.apple.com/il/app/%D7%A1%D7%95%D7%9C%D7%9D-%D7%94%D7%90%D7%A0%D7%92%D7%9C%D7%99%D7%AA/id6807340912" aria-label="סולם האנגלית: להורדה ב־App Store"><img src="assets/app-store/download-he.svg" alt="" width="139" height="48" loading="lazy"></a><a class="text-action" href="english/">מידע ותמיכה</a></div>
-                </div>
-                <figure class="device-shot" data-reveal>
-                    <img src="assets/english-gameplay.jpg" alt="תרגול המילה book בתוך סולם האנגלית">
-                </figure>
-            </div>
-        </section>
-
-        <section class="showcase is-robot is-reversed" aria-labelledby="robot-title">
-            <div class="section-inner showcase-inner">
-                <div class="showcase-copy" data-reveal>
-                    <p class="section-kicker">חדש ב־App Store · נכון או לא נכון?</p>
-                    <div class="showcase-title-row">
-                        <img src="assets/confused-robot.png" alt="" width="72" height="72" loading="lazy">
-                        <h2 id="robot-title">הרובוט המבולבל</h2>
-                    </div>
-                    <p>במסע במפעל תלת־ממדי עונים על שאלות נכון או לא נכון ומפנים לרובוט את הדרך. קוראים או שומעים הסבר קצר ומתקדמים לתחנה הבאה. גם טעות היא הזדמנות ללמוד ולנסות שוב.</p>
-                    <div class="store-row"><a class="app-store-badge" href="https://apps.apple.com/il/app/%D7%94%D7%A8%D7%95%D7%91%D7%95%D7%98-%D7%94%D7%9E%D7%91%D7%95%D7%9C%D7%91%D7%9C/id6813171077" aria-label="הרובוט המבולבל: להורדה ב־App Store"><img src="assets/app-store/download-he.svg" alt="" width="139" height="48" loading="lazy"></a><a class="text-action" href="robot/">מידע ותמיכה</a></div>
-                </div>
-                <figure class="device-shot" data-reveal>
-                    <img src="assets/robot-gameplay.jpg" alt="הרובוט המבולבל במפעל, ליד השלטים נכון ולא נכון" width="736" height="1600" loading="lazy">
-                </figure>
-            </div>
-        </section>
-
-        <section class="family-plan" aria-labelledby="family-title">
-            <div class="section-inner family-plan-inner">
-                <div data-reveal>
-                    <p class="section-kicker">למשפחות</p>
-                    <h2 id="family-title">מנוי אחד לכל ארבע האפליקציות</h2>
-                    <p>דגלים, חשבון, אנגלית והרובוט: כל התוכן בארבע האפליקציות, במנוי אחד. נרשמים מתוך כל אחת מהן, והמחיר מוצג שם לפי חשבון ה־Apple שלכם. חשבון הורה, לבחירתכם, פותח את המנוי גם בשאר המשחקים.</p>
-                </div>
-                <ul class="family-icons" aria-label="ארבע האפליקציות" data-reveal><li><img src="assets/flag-ladder.png" alt="" width="96" height="96" loading="lazy"></li><li><img src="assets/math-ladder.png" alt="" width="96" height="96" loading="lazy"></li><li><img src="assets/english-ladder.png" alt="" width="96" height="96" loading="lazy"></li><li><img src="assets/confused-robot.png" alt="" width="96" height="96" loading="lazy"></li></ul>
-            </div>
-        </section>
-
-        <section class="beta-callout" aria-labelledby="beta-callout-title">
-            <div class="section-inner beta-callout-inner">
-                <div data-reveal>
-                    <p class="section-kicker">בונים טוב יותר יחד</p>
-                    <h2 id="beta-callout-title">רוצים לנסות גרסאות חדשות לפני כולם?</h2>
-                    <p>אנחנו מזמינים הורים, אנשי חינוך ובודקים סקרנים לנסות גרסאות חדשות של המשחקים לפני שהן מגיעות לחנות, ולעזור לנו לדייק את החוויה.</p>
-                    <a class="primary-action" href="beta/">לרשימת ההמתנה</a>
-                </div>
-                <ul class="beta-mini-list" data-reveal>
-                    <li><strong>הזמנה אישית</strong><span>ללא קישור ציבורי פתוח</span></li>
-                    <li><strong>iOS ו־tvOS</strong><span>בדיקה במכשיר שמתאים לכם</span></li>
-                    <li><strong>ללא חיוב</strong><span>רכישות TestFlight הן עסקאות בדיקה</span></li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="support" class="support-strip" aria-labelledby="support-title">
-            <div class="section-inner support-strip-inner">
-                <div>
-                    <p class="section-kicker">אנחנו כאן לעזור</p>
-                    <h2 id="support-title">שאלה, תקלה או משוב?</h2>
-                    <p>כתבו לנו את שם המשחק, סוג המכשיר וגרסת המערכת. אין לשלוח סיסמאות או פרטי תשלום.</p>
-                </div>
-                <a class="secondary-action" href="mailto:ladderapps.support@icloud.com">שליחת הודעה לתמיכה</a>
             </div>
         </section>
     </main>
 
-    <footer class="site-footer">
+    <footer id="support" class="site-footer">
         <div class="footer-inner">
             <div class="footer-brand">
                 <img src="assets/ladder-learning-logo.png" alt="">
