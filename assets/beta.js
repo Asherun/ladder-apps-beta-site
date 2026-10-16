@@ -92,6 +92,8 @@
         selectedPlatforms.textContent = platforms.length
             ? platforms.map((value) => platformLabels[value] || value).join(" · ")
             : copy.none;
+        if (apps.length) appsError.textContent = "";
+        if (platforms.length) platformsError.textContent = "";
 
         form.querySelectorAll(".game-choice").forEach((choice) => {
             choice.classList.toggle(
