@@ -239,6 +239,10 @@
     transform: rotate(180deg);
 }
 
+[dir="rtl"] .beta-answers details:not([open]) summary::after {
+    transform: none;
+}
+
 .beta-answers details[open] summary::after {
     transform: rotate(-90deg);
 }

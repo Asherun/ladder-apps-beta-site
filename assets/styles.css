@@ -393,6 +393,10 @@ h3 {
     transform: rotate(180deg);
 }
 
+[dir="rtl"] .text-action::after {
+    transform: none;
+}
+
 .hero-facts {
     display: grid;
     max-width: 760px;
