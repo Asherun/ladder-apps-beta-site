@@ -3,7 +3,6 @@
         const slides = Array.from(carousel.querySelectorAll("[data-slide]"));
         const choices = Array.from(carousel.querySelectorAll("[data-select]"));
         const controls = carousel.querySelector("[data-carousel-controls]");
-        const counter = carousel.querySelector("[data-carousel-counter]");
         const status = carousel.querySelector("[data-carousel-status]");
         const stage = carousel.querySelector(".carousel-stage");
         if (!slides.length || choices.length !== slides.length || !controls) return;
@@ -11,37 +10,32 @@
         const rtl = document.documentElement.dir === "rtl";
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
         let selected = 0;
-        let motion;
         let pointer;
 
-        function select(index, announce = true) {
+        function select(index, announce = true, animate = true) {
             const next = (index + slides.length) % slides.length;
             if (next === selected && announce) return;
-            motion?.cancel();
+            carousel.dataset.motion = announce && animate && !reducedMotion.matches ? "fade" : "instant";
             selected = next;
             slides.forEach((slide, i) => {
-                slide.hidden = i !== selected;
+                // Keep a stable stacked layout while only the selected slide is interactive.
+                slide.hidden = false;
+                slide.inert = i !== selected;
+                slide.setAttribute("aria-hidden", String(i !== selected));
                 choices[i].setAttribute("aria-pressed", String(i === selected));
             });
             const slide = slides[selected];
             carousel.dataset.game = slide.dataset.slide;
-            counter.textContent = `${selected + 1} / ${slides.length}`;
             if (announce) {
                 status.textContent = `${slide.dataset.title}, ${selected + 1} / ${slides.length}`;
-                if (!reducedMotion.matches && typeof slide.animate === "function") {
-                    motion = slide.animate([
-                        { opacity: 0.65, transform: "translateY(6px)" },
-                        { opacity: 1, transform: "translateY(0)" }
-                    ], { duration: 200, easing: "ease-out" });
-                }
             }
         }
 
         choices.forEach((choice, index) => {
-            choice.addEventListener("click", () => select(index));
+            choice.addEventListener("click", (event) => select(index, true, event.detail !== 0));
         });
         carousel.querySelectorAll("[data-step]").forEach((arrow) => {
-            arrow.addEventListener("click", () => select(selected + Number(arrow.dataset.step)));
+            arrow.addEventListener("click", (event) => select(selected + Number(arrow.dataset.step), true, event.detail !== 0));
         });
         controls.addEventListener("keydown", (event) => {
             if (event.altKey || event.ctrlKey || event.metaKey) return;
@@ -52,7 +46,7 @@
             if (event.key === "End") next = slides.length - 1;
             if (next === undefined) return;
             event.preventDefault();
-            select(next);
+            select(next, true, false);
             choices[selected].focus({ preventScroll: true });
         });
 
@@ -74,9 +68,10 @@
             stage.addEventListener(name, () => { pointer = undefined; });
         });
         reducedMotion.addEventListener("change", () => {
-            if (reducedMotion.matches) motion?.cancel();
+            if (reducedMotion.matches) carousel.dataset.motion = "instant";
         });
         select(0, false);
+        carousel.dataset.enhanced = "true";
         controls.hidden = false;
     });
 })();

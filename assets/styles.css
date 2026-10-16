@@ -382,14 +382,15 @@ h3 {
 }
 
 .text-action::after {
-    content: "›";
+    content: "";
     margin-inline-start: 7px;
-    font-size: 1.35rem;
-    line-height: 1;
-}
-
-[dir="rtl"] .text-action::after {
-    content: "‹";
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+    background: currentColor;
+    -webkit-mask: url("carousel-chevron-left.svg") center / contain no-repeat;
+    mask: url("carousel-chevron-left.svg") center / contain no-repeat;
+    transform: rotate(180deg);
 }
 
 .hero-facts {

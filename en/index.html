@@ -52,7 +52,14 @@
 
     <main id="main-content">
         <section id="games-title" class="game-carousel" data-carousel data-game="flag" role="region" aria-roledescription="carousel" aria-labelledby="hero-title">
-            <div class="carousel-heading"><h1 id="hero-title">Ladder Learning Games</h1><a href="#family-title">One subscription, four games</a></div>
+            <h1 id="hero-title" class="carousel-title">Ladder Learning Games</h1>
+            <div class="carousel-backdrops" aria-hidden="true">
+                <div class="carousel-backdrop" data-background="flag"></div>
+                <div class="carousel-backdrop" data-background="math"></div>
+                <div class="carousel-backdrop" data-background="english"></div>
+                <div class="carousel-backdrop" data-background="robot"></div>
+            </div>
+            <div class="carousel-heading"><a href="#family-title">One subscription, four games</a></div>
             <div class="carousel-stage">
                 <article class="carousel-slide" id="slide-flag" data-slide="flag" data-title="Flag Ladder" role="group" aria-roledescription="slide" aria-labelledby="slide-title-flag">
                     <div class="carousel-copy">
@@ -133,7 +140,6 @@
                 </div>
                 <button type="button" class="carousel-arrow" data-step="1" aria-label="Next game" title="Next game"><img src="../assets/carousel-chevron-left.svg" alt="" width="22" height="22"></button>
             </div>
-            <p class="carousel-counter" data-carousel-counter dir="ltr" aria-hidden="true">1 / 4</p>
             <p class="carousel-status" data-carousel-status role="status" aria-live="polite" aria-atomic="true"></p>
             <noscript>
                 <nav class="carousel-fallback" aria-label="Download the games">

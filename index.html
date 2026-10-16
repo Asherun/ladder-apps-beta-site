@@ -52,7 +52,14 @@
 
     <main id="main-content">
         <section id="games-title" class="game-carousel" data-carousel data-game="flag" role="region" aria-roledescription="קרוסלה" aria-labelledby="hero-title">
-            <div class="carousel-heading"><h1 id="hero-title">משחקי הסולם</h1><a href="#family-title">מנוי אחד לכל המשחקים</a></div>
+            <h1 id="hero-title" class="carousel-title">משחקי הסולם</h1>
+            <div class="carousel-backdrops" aria-hidden="true">
+                <div class="carousel-backdrop" data-background="flag"></div>
+                <div class="carousel-backdrop" data-background="math"></div>
+                <div class="carousel-backdrop" data-background="english"></div>
+                <div class="carousel-backdrop" data-background="robot"></div>
+            </div>
+            <div class="carousel-heading"><a href="#family-title">מנוי אחד לכל המשחקים</a></div>
             <div class="carousel-stage">
                 <article class="carousel-slide" id="slide-flag" data-slide="flag" data-title="סולם הדגלים" role="group" aria-roledescription="שקופית" aria-labelledby="slide-title-flag">
                     <div class="carousel-copy">
@@ -133,7 +140,6 @@
                 </div>
                 <button type="button" class="carousel-arrow" data-step="1" aria-label="המשחק הבא" title="המשחק הבא"><img src="assets/carousel-chevron-left.svg" alt="" width="22" height="22"></button>
             </div>
-            <p class="carousel-counter" data-carousel-counter dir="ltr" aria-hidden="true">1 / 4</p>
             <p class="carousel-status" data-carousel-status role="status" aria-live="polite" aria-atomic="true"></p>
             <noscript>
                 <nav class="carousel-fallback" aria-label="הורדת המשחקים">
