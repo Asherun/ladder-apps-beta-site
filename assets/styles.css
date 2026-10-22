@@ -42,6 +42,7 @@
     --radius-medium: 20px;
     --radius-large: 28px;
     --radius-pill: 999px;
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 * {
@@ -1328,8 +1329,8 @@ h3 {
 
 .js [data-reveal] {
     opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 500ms ease, transform 500ms ease;
+    transform: translateY(12px);
+    transition: opacity 320ms var(--ease-out), transform 320ms var(--ease-out);
 }
 
 .js [data-reveal].is-visible {
@@ -1647,10 +1648,10 @@ h3 {
         scroll-behavior: auto;
     }
 
+    /* Fewer and gentler, not zero: keep the fade, drop the movement. */
     .js [data-reveal] {
-        opacity: 1;
         transform: none;
-        transition: none;
+        transition: opacity 200ms linear;
     }
 }
 
@@ -1888,5 +1889,119 @@ h3 {
     .subpage-hero .brand-mark {
         width: 72px;
         height: 72px;
+    }
+}
+
+/* Scroll comfort (2026-10-22): browser surfaces, an on-page navigation for the support pages
+   (assets/site.js builds it from the page's own sections) and a phone header that steps aside
+   while reading down. Motion uses transform and opacity only, and none of it under reduced motion. */
+html {
+    accent-color: var(--teal);
+    scrollbar-color: rgba(16, 42, 67, 0.28) transparent;
+}
+
+::selection {
+    background: rgba(8, 127, 122, 0.18);
+    color: var(--ink-strong);
+}
+
+#family-title,
+main.page > section[id],
+main.page > section h2[id] {
+    scroll-margin-top: calc(var(--header-h, 77px) + 76px);
+}
+
+#family-title {
+    scroll-margin-top: calc(var(--header-h, 77px) + 24px);
+}
+
+.page-toc {
+    position: sticky;
+    z-index: 60;
+    inset-block-start: var(--header-h, 77px);
+    margin-block: 4px 30px;
+    padding-block: 10px;
+    border-block-end: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.94);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+    backdrop-filter: saturate(180%) blur(18px);
+    transition: transform 240ms var(--ease-out);
+}
+
+.page-toc ol {
+    display: flex;
+    gap: 8px;
+    margin: 0;
+    padding: 2px;
+    overflow-x: auto;
+    list-style: none;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+}
+
+.page-toc ol::-webkit-scrollbar {
+    display: none;
+}
+
+.page-toc a {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    padding: 8px 15px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 160ms var(--ease-out), border-color 160ms var(--ease-out), color 160ms var(--ease-out);
+}
+
+.page-toc a[aria-current="true"] {
+    border-color: var(--teal);
+    background: var(--mint);
+    color: var(--teal-dark);
+}
+
+.page-toc a:active {
+    transform: translateY(1px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .page-toc a:hover {
+        border-color: var(--teal);
+        color: var(--teal-dark);
+    }
+}
+
+@media (max-width: 760px) {
+    .site-header {
+        transition: transform 240ms var(--ease-out);
+    }
+
+    .site-header.is-tucked {
+        transform: translateY(-100%);
+    }
+
+    .header-tucked .page-toc {
+        transform: translateY(calc(-1 * var(--header-h, 77px)));
+    }
+
+}
+
+@media (max-width: 560px) {
+    .page-toc {
+        margin-inline: -14px;
+        padding-inline: 14px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-header,
+    .page-toc,
+    .page-toc a {
+        transition: none;
     }
 }
