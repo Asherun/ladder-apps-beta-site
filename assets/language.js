@@ -22,9 +22,19 @@
         document.querySelectorAll('a[href]').forEach(link => {
             const url = new URL(link.href, current);
             if (route(url) === null || link.getAttribute('href').startsWith('#')) return;
-            const manual = link.hasAttribute('data-language-switch');
-            const selected = manual && valid(link.hreflang) ? link.hreflang : language;
+            const targetLanguage = url.pathname.slice(root.pathname.length).startsWith('en/') ? 'en' : 'he';
+            const marked = link.hasAttribute('data-language-switch');
+            const manual = marked || targetLanguage !== currentLanguage;
+            const selected = manual ? (valid(link.hreflang) ? link.hreflang : targetLanguage) : language;
             if (manual) {
+                link.hreflang = selected;
+                // Inline support links are language choices too, even without the header marker.
+                if (!marked) {
+                    link.setAttribute('data-language-switch', '');
+                    link.addEventListener('click', () => {
+                        try { window.localStorage.setItem('ladder-site-language', selected); } catch { /* Optional. */ }
+                    });
+                }
                 url.search = current.search;
                 url.hash = current.hash;
             }
