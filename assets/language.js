@@ -4,7 +4,7 @@
     const root = new URL('../', script.src);
     const current = new URL(window.location.href);
     const supported = new Set(['', 'flag/', 'math/', 'english/', 'robot/', 'privacy/', 'terms/',
-        'beta/', 'get/math/', 'get/english/']);
+        'beta/', 'get/family/', 'get/flag/', 'get/math/', 'get/english/', 'get/robot/']);
     const valid = value => value === 'he' || value === 'en';
     function route(url) {
         if (url.origin !== root.origin || !url.pathname.startsWith(root.pathname)) return null;

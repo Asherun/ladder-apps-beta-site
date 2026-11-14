@@ -9,12 +9,13 @@
     const path = location.pathname.slice(base.length).replace(/index\.html$/, '');
     const routes = new Map([
         ['', ['home', 'all', 'he']], ['en/', ['home', 'all', 'en']],
-        ['get/math/', ['download', 'math', 'he']], ['get/english/', ['download', 'english', 'he']],
-        ['en/get/math/', ['download', 'math', 'en']], ['en/get/english/', ['download', 'english', 'en']]
+        ['get/family/', ['download', 'all', 'he']], ['en/get/family/', ['download', 'all', 'en']]
     ]);
     for (const app of ['flag', 'math', 'english', 'robot']) {
         routes.set(`${app}/`, ['support', app, 'he']);
         routes.set(`en/${app}/`, ['support', app, 'en']);
+        routes.set(`get/${app}/`, ['download', app, 'he']);
+        routes.set(`en/get/${app}/`, ['download', app, 'en']);
     }
     if (!routes.has(path) || !window.crypto?.randomUUID || !window.fetch) return;
     const [page, pageApp, language] = routes.get(path);
@@ -23,16 +24,21 @@
     if (optedOut()) return;
 
     const parameters = new URLSearchParams(location.search);
-    const suppliedCampaign = parameters.get('ct');
+    const suppliedCampaign = parameters.get('ct') || '';
     const qa = parameters.get('qa') === '1';
-    const campaigns = new Map([
-        ['math-ig', ['math', 'instagram']], ['math-fb', ['math', 'facebook']],
-        ['english-ig', ['english', 'instagram']], ['english-fb', ['english', 'facebook']]
-    ]);
-    const campaignInfo = campaigns.get(suppliedCampaign);
-    const campaign = campaignInfo && (pageApp === 'all' || pageApp === campaignInfo[0])
-        ? suppliedCampaign : 'none';
-    const source = campaign === 'none' ? 'unattributed' : campaignInfo[1];
+    // The same tokens get.js accepts (tests compare the two). Ad tokens fit every page:
+    // f<flight>-a<angle>[variant]-<placement> (f1-a1-ig, f2-a3h-ig, f2-a6-us) and org-ig / org-fb (bio links).
+    // The October per-app tokens (math-ig) count only on their own app's pages and the all-games pages.
+    const sharedCampaign = /^(?:f[1-9][0-9]?-a[1-9][0-9]{0,2}[a-z]?-(ig|fb|us)|org-(ig|fb))$/;
+    const appCampaign = /^(flag|math|english|robot)-(ig|fb)$/;
+    const shared = sharedCampaign.exec(suppliedCampaign);
+    const own = appCampaign.exec(suppliedCampaign);
+    const accepted = suppliedCampaign.length <= 30 &&
+        (shared || (own && (pageApp === 'all' || pageApp === own[1])));
+    const campaign = accepted ? suppliedCampaign : 'none';
+    // "us" names the US+CA audience cell, not a platform, so its source is Meta in general.
+    const channel = accepted ? (shared ? shared[1] || shared[2] : own[2]) : '';
+    const source = { ig: 'instagram', fb: 'facebook', us: 'meta' }[channel] || 'unattributed';
     const apps = new Map([
         ['6802382851', 'flag'], ['6806677285', 'math'],
         ['6807340912', 'english'], ['6813171077', 'robot']

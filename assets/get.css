@@ -1,4 +1,5 @@
-/* Download pages for paid ads (/get/<app>/, 2026-10-25): one screen, the App Store button first. */
+/* Download pages for paid ads (/get/<app>/, 2026-10-25; /get/family/, Flag and Robot 2026-11-14):
+   one screen, the App Store button first, the free start right under it, never a price. */
 .get-page {
     max-width: 560px;
     padding-block-start: 28px;
@@ -55,11 +56,184 @@
 
 .get-shot {
     display: block;
-    width: min(260px, 70%);
+    width: 100%;
     height: auto;
-    margin-inline: auto;
     border-radius: var(--radius-large);
     box-shadow: var(--shadow);
+}
+
+/* The free start, said in full right under the button (the commercial plan's free line). */
+.get-free {
+    max-width: 34ch;
+    margin: 10px 0 0;
+    border-radius: var(--radius-medium);
+    padding: 10px 16px;
+    color: #7a4b00;
+    background: var(--warm);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.get-free strong {
+    font-weight: 800;
+}
+
+/* Screenshot slot: the store-shots agent's captures replace these images one for one. */
+.get-shots {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 220px));
+    justify-content: center;
+    gap: 14px;
+}
+
+/* /get/family/: the four games as rows, each with its own button. */
+.get-page.get-family {
+    max-width: 760px;
+}
+
+.get-family .get-hero .get-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 0;
+    box-shadow: none;
+    object-fit: contain;
+}
+
+/* Smaller than an app page's title so the four buttons reach the first phone screen. */
+.get-family .get-hero h1 {
+    max-width: 18ch;
+    font-size: clamp(1.75rem, 5.4vw, 2.6rem);
+    line-height: 1.15;
+    text-wrap: balance;
+}
+
+.get-family .get-hero .lead {
+    max-width: 46ch;
+    font-size: 1.05rem;
+}
+
+.get-apps {
+    display: grid;
+    gap: 12px;
+    width: 100%;
+    margin: 22px 0 0;
+    padding: 0;
+    list-style: none;
+    text-align: start;
+}
+
+.get-app {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 6px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-medium);
+    padding: 14px 16px;
+    background: var(--surface);
+}
+
+.get-app > img {
+    width: 64px;
+    height: 64px;
+    border-radius: 15px;
+    box-shadow: 0 8px 18px rgba(16, 42, 67, 0.14);
+}
+
+.get-app-text {
+    display: grid;
+    justify-items: start;
+    gap: 2px;
+    min-width: 0;
+}
+
+.get-app-text h2 {
+    margin: 0;
+    font-size: 1.12rem;
+}
+
+.get-app-text p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.4;
+}
+
+.get-app-free {
+    margin-block-start: 4px;
+    border-radius: var(--radius-pill);
+    padding: 2px 10px;
+    color: #7a4b00;
+    background: var(--warm);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.get-app .get-badge,
+.get-family-shot .get-badge {
+    min-height: 48px;
+}
+
+.get-app .get-badge img,
+.get-family-shot .get-badge img {
+    height: 48px;
+}
+
+.get-plan {
+    border-radius: var(--radius-large);
+    padding: 22px 24px;
+    background: var(--mint);
+    text-align: center;
+}
+
+.get-plan h2 {
+    margin: 0 0 8px;
+    font-size: 1.35rem;
+    text-wrap: balance;
+}
+
+.get-plan p {
+    max-width: 58ch;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.get-family-shots {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.get-family-shot {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.get-family-shot figcaption {
+    font-weight: 800;
+}
+
+@media (max-width: 640px) {
+    .get-app {
+        grid-template-columns: 56px minmax(0, 1fr);
+    }
+
+    .get-app > img {
+        width: 56px;
+        height: 56px;
+        border-radius: 13px;
+    }
+
+    .get-app .get-badge {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+    .get-family-shots {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 .get-points {
