@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Four learning games for kids: flags, math, English, and science. On iPhone, iPad, and Apple TV. Start free on the App Store.">
+    <meta name="description" content="Five learning games for kids: flags, math, English, science, and riddles. On iPhone, iPad, and Apple TV. Start free on the App Store.">
     <title>Ladder Learning Games | Learn, play, and climb</title>
     <link rel="canonical" href="https://asherun.github.io/ladder-apps-beta-site/en/">
     <meta property="og:type" content="website">
@@ -11,7 +11,7 @@
     <meta property="og:locale" content="en_US">
     <meta property="og:locale:alternate" content="he_IL">
     <meta property="og:title" content="Ladder Learning Games | Learn, play, and climb">
-    <meta property="og:description" content="Four learning games for kids: flags, math, English, and science. Start free on the App Store.">
+    <meta property="og:description" content="Five learning games for kids: flags, math, English, science, and riddles. Start free on the App Store.">
     <meta property="og:url" content="https://asherun.github.io/ladder-apps-beta-site/en/">
     <meta property="og:image" content="https://asherun.github.io/ladder-apps-beta-site/assets/beta-family-hero.jpg">
     <meta property="og:image:secure_url" content="https://asherun.github.io/ladder-apps-beta-site/assets/beta-family-hero.jpg">
@@ -21,16 +21,15 @@
     <meta property="og:image:alt" content="Flag Ladder, Math Ladder, and English Ladder learning games">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Ladder Learning Games | Learn, play, and climb">
-    <meta name="twitter:description" content="Four learning games for kids: flags, math, English, and science. Start free on the App Store.">
+    <meta name="twitter:description" content="Five learning games for kids: flags, math, English, science, and riddles. Start free on the App Store.">
     <meta name="twitter:image" content="https://asherun.github.io/ladder-apps-beta-site/assets/beta-family-hero.jpg">
     <meta name="twitter:image:alt" content="Flag Ladder, Math Ladder, and English Ladder learning games">
     <link rel="icon" href="../assets/ladder-learning-logo-144.png">
     <link rel="stylesheet" href="../assets/styles.css?v=20261022-1">
-    <link rel="stylesheet" href="../assets/carousel.css?v=20261016-2">
+    <link rel="stylesheet" href="../assets/carousel.css?v=20261120-1">
     <script src="../assets/site.js?v=20261022-1" defer></script>
     <script src="../assets/carousel.js" defer></script>
-    <script src="../assets/language.js?v=20261114-1" data-locale-endpoint="https://ladder-beta-waitlist.ladder-learning-games.workers.dev/v1/site-language" defer></script>
-    <script src="../assets/analytics.js?v=20261114-1" data-posthog-token="phc_uFeNkaUcaFAcniLTQLoZXQJmeBG5TacEwsB24JPDZRJG" defer></script>
+    <script src="../assets/language.js?v=20261120-1" data-locale-endpoint="https://ladder-beta-waitlist.ladder-learning-games.workers.dev/v1/site-language" defer></script>
 </head>
 <body class="home-page">
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -60,8 +59,9 @@
                 <div class="carousel-backdrop" data-background="math"></div>
                 <div class="carousel-backdrop" data-background="english"></div>
                 <div class="carousel-backdrop" data-background="robot"></div>
+                <div class="carousel-backdrop" data-background="riddle"></div>
             </div>
-            <div class="carousel-heading"><a href="#family-title">One subscription, four games</a></div>
+            <div class="carousel-heading"><a href="#family-title">One subscription, five games</a></div>
             <div class="carousel-stage">
                 <article class="carousel-slide" id="slide-flag" data-slide="flag" data-title="Flag Ladder" role="group" aria-roledescription="slide" aria-labelledby="slide-title-flag">
                     <div class="carousel-copy">
@@ -131,6 +131,20 @@
                         <img class="carousel-shot" src="../assets/robot-gameplay.jpg" alt="The robot in the factory with a true-or-false question about the sun" width="736" height="1600" loading="lazy" decoding="async" draggable="false">
                     </figure>
                 </article>
+                <article class="carousel-slide" id="slide-riddle" data-slide="riddle" data-title="Riddle Ladder" role="group" aria-roledescription="slide" aria-labelledby="slide-title-riddle" hidden>
+                    <div class="carousel-copy">
+                        <p class="section-kicker">Learning games in Hebrew · Start free</p>
+                        <h2 id="slide-title-riddle">Riddle Ladder</h2>
+                        <p class="carousel-lead">Thinking riddles for ages 7–8. Discover the answer and listen to a recorded explanation, even offline.</p>
+                        <div class="carousel-actions">
+                            <a class="app-store-badge" href="https://apps.apple.com/app/id6835017597" aria-label="Riddle Ladder: Download on the App Store"><img src="../assets/app-store/download-en.svg" alt="" width="144" height="48"></a>
+                            <a class="text-action" href="riddle/">Explore the game</a>
+                        </div>
+                        <p class="carousel-proof">Coming soon · Free to start</p>
+                        <p class="carousel-platform" dir="ltr">iPhone · iPad · Apple TV</p>
+                    </div>
+                    <figure class="carousel-media"><img class="carousel-shot carousel-app-icon" src="../assets/riddle-ladder-384.jpg" alt="Riddle Ladder" width="384" height="384" loading="lazy" decoding="async" draggable="false"></figure>
+                </article>
             </div>
             <div class="carousel-controls" data-carousel-controls hidden>
                 <button type="button" class="carousel-arrow" data-step="-1" aria-label="Previous game" title="Previous game"><img src="../assets/carousel-chevron-left.svg" alt="" width="22" height="22"></button>
@@ -139,6 +153,7 @@
                     <button type="button" data-select="math" aria-label="Math Ladder" aria-pressed="false" aria-controls="slide-math"><img src="../assets/math-ladder-144.jpg" alt="" width="48" height="48" draggable="false"><span>Math</span></button>
                     <button type="button" data-select="english" aria-label="English Ladder" aria-pressed="false" aria-controls="slide-english"><img src="../assets/english-ladder-144.jpg" alt="" width="48" height="48" draggable="false"><span>English</span></button>
                     <button type="button" data-select="robot" aria-label="The Confused Robot" aria-pressed="false" aria-controls="slide-robot"><img src="../assets/confused-robot-144.jpg" alt="" width="48" height="48" draggable="false"><span>Robot</span></button>
+                    <button type="button" data-select="riddle" aria-label="Riddle Ladder" aria-pressed="false" aria-controls="slide-riddle"><img src="../assets/riddle-ladder-144.jpg" alt="" width="48" height="48" draggable="false"><span>Riddles</span></button>
                 </div>
                 <button type="button" class="carousel-arrow" data-step="1" aria-label="Next game" title="Next game"><img src="../assets/carousel-chevron-left.svg" alt="" width="22" height="22"></button>
             </div>
@@ -149,6 +164,7 @@
                     <a href="https://apps.apple.com/app/id6806677285">Math Ladder</a>
                     <a href="https://apps.apple.com/app/id6807340912">English Ladder</a>
                     <a href="https://apps.apple.com/app/id6813171077">The Confused Robot</a>
+                    <a href="https://apps.apple.com/app/id6835017597">Riddle Ladder</a>
                 </nav>
             </noscript>
         </section>
@@ -158,16 +174,16 @@
                 <h2 id="family-title">Before you play</h2>
                 <div class="home-questions">
                     <details open>
-                        <summary>How does the four-app subscription work?</summary>
-                        <p>The shared content subscription unlocks learning content in Flags, Math, English, and the Robot while it is active. To use it in the other games, sign in with the same parent account. Prices and terms are shown in the app before purchase.</p>
+                        <summary>How does the five-app subscription work?</summary>
+                        <p>The shared content subscription unlocks learning content in Flags, Math, English, the Robot, and Riddle Ladder while it is active. To use it in the other games, sign in with the same parent account. Prices and terms are shown in the app before purchase.</p>
                     </details>
                     <details>
                         <summary>Can we start without a subscription?</summary>
-                        <p>Yes. The first five journeys, levels, or themes in the Ladder games are free, as are the Robot’s first two worlds. No sign-in is needed for the free content. Additional content is available through in-app purchases.</p>
+                        <p>Yes. The first five journeys, levels, or themes in Flag, Math, and English Ladder are free, as are the Robot’s first two worlds. Riddle Ladder also has free content to start. No sign-in is needed for the free content. Additional content is available through in-app purchases.</p>
                     </details>
                     <details>
                         <summary>Which devices can we play on?</summary>
-                        <p>All four games are available on iPhone, iPad, and Apple TV.</p>
+                        <p>All five games are available on iPhone, iPad, and Apple TV.</p>
                     </details>
                 </div>
             </div>

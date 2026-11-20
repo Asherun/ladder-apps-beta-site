@@ -16,6 +16,7 @@
 .game-carousel[data-game="flag"] [data-background="flag"],
 .game-carousel[data-game="math"] [data-background="math"],
 .game-carousel[data-game="english"] [data-background="english"],
+.game-carousel[data-game="riddle"] [data-background="riddle"],
 .game-carousel[data-game="robot"] [data-background="robot"] { opacity: 1; }
 .game-carousel [hidden] { display: none !important; }
 
@@ -56,7 +57,7 @@
 .carousel-arrow[data-step="1"] img { transform: rotate(180deg); }
 [dir="rtl"] .carousel-arrow[data-step="-1"] img { transform: rotate(180deg); }
 [dir="rtl"] .carousel-arrow[data-step="1"] img { transform: none; }
-.carousel-dock { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 6px; border: 1px solid #ffffff; border-radius: var(--radius-large); background: #ffffffad; -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); box-shadow: 0 8px 24px #102a4310; }
+.carousel-dock { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; padding: 6px; border: 1px solid #ffffff; border-radius: var(--radius-large); background: #ffffffad; -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); box-shadow: 0 8px 24px #102a4310; }
 .carousel-dock button { min-width: 0; min-height: 88px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 6px 2px; border: 1px solid transparent; border-radius: var(--radius-medium); background: transparent; color: var(--ink); font-size: 0.8rem; font-weight: 600; cursor: pointer; }
 .carousel-dock button[aria-pressed="true"] { background: #ffffff; border-color: #dbe4e8; box-shadow: 0 3px 8px #102a4310; }
 .carousel-dock img { width: 48px; height: 48px; object-fit: contain; border-radius: 11px; }
@@ -142,4 +143,13 @@
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
     .carousel-dock, .carousel-arrow { background: #f6f9fa; border-color: var(--muted); -webkit-backdrop-filter: none; backdrop-filter: none; }
     .carousel-dock button[aria-pressed="true"] { border-color: var(--ink); }
+}
+
+.carousel-backdrop[data-background="riddle"] { --carousel-tint: #deddf7; --carousel-base: #f7f6ff; }
+.carousel-shot.carousel-app-icon { height: auto; width: min(100%, 320px); border-radius: 22%; }
+@media (max-width: 600px) {
+    .carousel-shot.carousel-app-icon { width: auto; height: 100%; max-height: 224px; }
+    .carousel-controls { gap: 4px; grid-template-columns: 36px minmax(0, 1fr) 36px; }
+    .carousel-arrow { width: 36px; height: 44px; }
+    .carousel-dock img { width: 32px; height: 32px; }
 }
