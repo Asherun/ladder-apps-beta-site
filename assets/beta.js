@@ -33,12 +33,14 @@
         "flag-ladder": "Flag Ladder",
         "math-ladder": "Math Ladder",
         "english-ladder": "English Ladder",
-        "confused-robot": "The Confused Robot"
+        "confused-robot": "The Confused Robot",
+        "riddle-ladder": "Riddle Ladder"
     } : {
         "flag-ladder": "סולם הדגלים",
         "math-ladder": "סולם החשבון",
         "english-ladder": "סולם האנגלית",
-        "confused-robot": "הרובוט המבולבל"
+        "confused-robot": "הרובוט המבולבל",
+        "riddle-ladder": "סולם החידות"
     };
     const platformLabels = {
         ios: isEnglish ? "iPhone / iPad" : "iPhone או iPad",

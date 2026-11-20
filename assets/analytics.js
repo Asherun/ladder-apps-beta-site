@@ -11,7 +11,7 @@
         ['', ['home', 'all', 'he']], ['en/', ['home', 'all', 'en']],
         ['get/family/', ['download', 'all', 'he']], ['en/get/family/', ['download', 'all', 'en']]
     ]);
-    for (const app of ['flag', 'math', 'english', 'robot']) {
+    for (const app of ['flag', 'math', 'english', 'robot', 'riddle']) {
         routes.set(`${app}/`, ['support', app, 'he']);
         routes.set(`en/${app}/`, ['support', app, 'en']);
         routes.set(`get/${app}/`, ['download', app, 'he']);
@@ -30,7 +30,7 @@
     // f<flight>-a<angle>[variant]-<placement> (f1-a1-ig, f2-a3h-ig, f2-a6-us) and org-ig / org-fb (bio links).
     // The October per-app tokens (math-ig) count only on their own app's pages and the all-games pages.
     const sharedCampaign = /^(?:f[1-9][0-9]?-a[1-9][0-9]{0,2}[a-z]?-(ig|fb|us)|org-(ig|fb))$/;
-    const appCampaign = /^(flag|math|english|robot)-(ig|fb)$/;
+    const appCampaign = /^(flag|math|english|robot|riddle)-(ig|fb)$/;
     const shared = sharedCampaign.exec(suppliedCampaign);
     const own = appCampaign.exec(suppliedCampaign);
     const accepted = suppliedCampaign.length <= 30 &&
@@ -41,7 +41,7 @@
     const source = { ig: 'instagram', fb: 'facebook', us: 'meta' }[channel] || 'unattributed';
     const apps = new Map([
         ['6802382851', 'flag'], ['6806677285', 'math'],
-        ['6807340912', 'english'], ['6813171077', 'robot']
+        ['6807340912', 'english'], ['6813171077', 'robot'], ['6835017597', 'riddle']
     ]);
     // This ID joins a view to its clicks, not a person to other pages or visits.
     const pageLoadId = window.crypto.randomUUID();
